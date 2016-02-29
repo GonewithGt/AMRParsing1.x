@@ -1,0 +1,1637 @@
+# ::id lpp_1943.146  ::date 2016-02-23T14:10:07.427 ::annotator Aligner v.02 
+# ::tok Chapter 4 .
+# ::alignments 0-1|0 1-2|0.0 
+(x1 / chapter
+	:quant 4)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:07.702 ::id lpp_1943.147 
+# ::tok I had thus learned a second fact of great importance : this was that the planet the little prince came from was scarcely any larger than a house !
+# ::alignments 3-4|0.0 6-7|0.0.1 24-25|0.0.1.2 15-16|0.0.1.2.2 19-20|0.0.1.2.2.0 18-19|0.0.1.2.2.0.0 17-18|0.0.1.2.2.0.0.0 27-28|0.0.1.2.1 23-24|0.0.1.2.0.0 8-9|0.0.1.1.0 0-1|0.0.0 22-23|0.0.1.2.0.0.0 9-10|0.0.1.1 
+(x4 / learn-01
+	:manner (x3 / thus)
+	:ARG1 (x7 / fact
+		:ARG1 (x10 / important
+			:mod (x9 / great)))
+	:ARG1 (x12 / this
+		:mod (x25 / large
+			:ARG0 (x16 / planet
+				:ARG1-of (x20 / come-01
+					:ARG1 (x19 / prince
+						:mod (x18 / little))))
+			:mod (x23 / scarcely)
+			:mod (x24 / any)
+			:compared-to (x28 / house))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:07.782 ::id lpp_1943.148 
+# ::tok But that did not really surprise me much .
+# ::alignments  0-1|0 5-6|0.0 7-8|0.0.3 1-2|0.0.1 4-5|0.0.4 
+(x1 / contrast-01
+	:ARG1 (x6 / surprise-01
+		:mod (x5 / really)
+		:degree (x8 / much)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.029 ::id lpp_1943.149 
+# ::tok I knew very well that in addition to the great planets -- such as the Earth , Jupiter , Mars , Venus -- to which we have given names , there are also hundreds of others , some of which are so small that one has a hard time seeing them through the telescope .
+# ::alignments 15-16|0.1.0.0.1+0.1.0.0.1.1+0.1.0.0.1.1.0 17-18|0.1.0.0.2+0.1.0.0.2.1+0.1.0.0.2.1.0 19-20|0.1.0.0.3+0.1.0.0.3.1+0.1.0.0.3.1.0 21-22|0.1.0.0.4+0.1.0.0.4.1+0.1.0.0.4.1.0 1-2|0 3-4|0.2 2-3|0.2.0 10-11|0.1.0.0 28-29|0.1.0.0.5 25-26|0.1.0.0.5.0 9-10|0.1.0.0.0 32-33|0.1.0.1.0 42-43|0.1.0.1.0.0.0 49-50|0.1.0.1.0.0.0.1.0.0 53-54|0.1.0.1.0.0.0.1.0.0.0 41-42|0.1.0.1.0.0.0.0 35-36|0.1.0.1.1 0-1|0.0 
+(x2 / know-01
+	:ARG0 (x1 / i)
+	:manner (x4 / well
+		:degree (x3 / very))
+	:ARG1 (x34 / hundreds
+		:concession (x11 / planet
+			:mod (x10 / great)
+			:example (x16 / organization
+				:name (n / name
+					:op1 "Earth"
+					:op2 ","
+					:op3 "Jupiter"
+					:op4 ","
+					:op5 "Mars"
+					:op6 ","
+					:op7 "Venus"))
+			:name (x29 / name))
+		:mod (x33 / also)
+		:mod (x36 / other
+			:mod (x43 / small
+				:null_edge (x38 / some)
+				:purpose (x50 / see-01
+					:ARG2 (x54 / telescope))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.092 ::id lpp_1943.150 
+# ::tok When an astronomer discovers one of these he does not give it a name , but only a number .
+# ::alignments 10-11|0 13-14|0.5.0 3-4|0.4 16-17|0.3 4-5|0.2.0 5-6|0.2+0.2.1 18-19|0.1 2-3|0.0 
+(x11 / give-01
+	:condition (x4 / discover-01
+		:ARG0 (x3 / astronomer))
+	:ARG1 (x16 / contrast-01
+		:ARG1 (x14 / name
+			:mod (x17 / only))
+		:ARG1 (x19 / number)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.132 ::id lpp_1943.151 
+# ::tok He might call it , for example , " Asteroid 325 . "
+# ::alignments 9-11|0.0.2+0.0.2.0+0.0.2.1 2-3|0.0 3-4|0.0.1 0-1|0.0.0 
+(x3 / call-03
+	:ARG1 (x7 / example)
+	:ARG1 (x10 / asteroid
+		:quant (x11 / 325)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.208 ::id lpp_1943.152 
+# ::tok I have serious reason to believe that the planet from which the little prince came is the asteroid known as B - 612 .
+# ::alignments 20-21|0.1.1.1.1+0.1.1.1.1.0 3-4|0.0 2-3|0.0.0 5-6|0.1 14-15|0.1.1 17-18|0.1.1.1 8-9|0.1.1.1.2 13-14|0.1.1.0 12-13|0.1.1.0.0 0-1|0.1.0 
+(x4 / reason-01
+	:mod (x3 / serious)
+	:ARG1 (x6 / believe-01
+		:ARG1 (x18 / asteroid
+			:ARG0 (x9 / planet
+				:ARG1-of (x15 / come-01
+					:ARG1 (x14 / prince
+						:mod (x13 / little))))
+			:ARG1-of (x19 / know-01
+				:ARG2 (x21 / b-612)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.242 ::id lpp_1943.153 
+# ::tok This asteroid has only once been seen through the telescope .
+# ::alignments 6-7|0 3-4|0.2.1 9-10|0.1 1-2|0.0 0-1|0.0.0 2-3|0.2 
+(x7 / see-01
+	:ARG1 (x2 / asteroid
+		:mod (x1 / this))
+	:time (x5 / once
+		:mod (x4 / only))
+	:ARG2 (x10 / telescope))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.336 ::id lpp_1943.154 
+# ::tok That was by a Turkish astronomer , in 1909 .
+# ::alignments 4-5|0.0.0+0.0.0.1+0.0.0.1.0 8-9|0.1+0.1.0 5-6|0.0 
+(x6 / astronomer
+	:mod (x5 / country
+		:name (n / name
+			:op1 "Turkish"))
+	:time (x9 / date-entity
+		:year 1909))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.385 ::id lpp_1943.155 
+# ::tok On making his discovery , the astronomer had presented it to the International Astronomical Congress , in a great demonstration .
+# ::alignments 12-15|0.1+0.1.1+0.1.1.0+0.1.1.1+0.1.1.2 8-9|0 18-19|0.3.0 0-1|0.2 6-7|0.2.0.0 9-10|0.0 19-20|0.3 3-4|0.2.0 
+(x9 / present-01
+	:ARG2 (x2 / make-01
+		:ARG1 (x4 / discover-01))
+	:ARG0 (x7 / astronomer)
+	:ARG2 (x13 / organization
+		:name (n / name
+			:op1 "International"
+			:op2 "Astronomical"
+			:op3 "Congress"))
+	:location (x20 / demonstrate-01
+		:mod (x19 / great)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.421 ::id lpp_1943.156 
+# ::tok But he was in Turkish costume , and so nobody would believe what he said .
+# ::alignments 4-5|0.0.1+0.0.1.1+0.0.1.1.0 0-1|0 5-6|0.0 11-12|0.0.2.0 14-15|0.0.2.0.1+0.0.2.0.1.0 1-2|0.0.0 
+(x1 / contrast-01
+	:ARG2 (x6 / costume
+		:mod (x5 / country
+			:name (n / name
+				:op1 "Turkish")))
+	:ARG2 (x8 / and)
+	:ARG2 (x12 / believe-01
+		:ARG0 (x10 / nobody)
+		:ARG1 (x15 / say-01)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.434 ::id lpp_1943.157 
+# ::tok Grown - ups are like that ...
+# ::alignments 5-6|0.1 0-1|0.0 
+(x3 / up
+	:ARG1-of (x1 / grow-03))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.494 ::id lpp_1943.158 
+# ::tok Fortunately , however , for the reputation of Asteroid B - 612 , a Turkish dictator made a law that his subjects , under pain of death , should change to European costume .
+# ::alignments 8-10|0.0.2.0.0+0.0.2.0.0.1+0.0.2.0.0.1.0+0.0.2.0.0.1.1 14-15|0.0.0.0.0+0.0.0.0.0.1+0.0.0.0.0.1.0 31-32|0.0.1.0.1.0+0.0.1.0.1.0.1+0.0.1.0.1.0.1.0 16-17|0.0 6-7|0.0.2.0 18-19|0.0.1 29-30|0.0.1.0 26-27|0.0.1.0.2.0.0 32-33|0.0.1.0.1 21-22|0.0.1.0.0 15-16|0.0.0.0+0.0.0.0.1 0-1|0.0.2 
+(x7 / repute-01
+	:mod (x1 / fortunately)
+	:mod (x3 / however)
+	:ARG1 (x9 / organization
+		:name (n / name
+			:op1 "Asteroid"
+			:op2 "B-612"))
+	:domain (x14 / dictator
+		:mod (x13 / country
+			:name (n1 / name
+				:op1 "Turkish")))
+	:ARG1 (x17 / law
+		:ARG0-of (x27 / recommend-01
+			:ARG1 (x28 / change-01
+				:ARG1 (x20 / subject)
+				:ARG1 (x23 / pain
+					:ARG2 (x25 / die-01))
+				:ARG2 (x31 / costume
+					:mod (x30 / continent
+						:name (n2 / name
+							:op1 "European")))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.529 ::id lpp_1943.159 
+# ::tok So in 1920 the astronomer gave his demonstration all over again , dressed with impressive style and elegance .
+# ::alignments 2-3|0.0.2+0.0.2.0 4-5|0.0.0 12-13|0.0.0.0 16-17|0.0.0.0.0 17-18|0.0.0.0.0.1 15-16|0.0.0.0.0.0 8-9|0.0.1 9-10|0.0.1.0 10-11|0.0.1.0.0 7-8|0.0 14-15|0.0.0.0.0.2 
+(x6 / give-01
+	:time (x3 / date-entity
+		:year 1920)
+	:ARG0 (x5 / astronomer)
+	:ARG1 (x8 / demonstrate-01)
+	:time (x11 / again
+		:quant (x9 / all)
+		:degree (x10 / over))
+	:ARG1-of (x13 / dress
+		:ARG1 (x17 / and
+			:op1 (x16 / style
+				:mod (x15 / impressive))
+			:op2 (x18 / elegance))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.553 ::id lpp_1943.160 
+# ::tok And this time everybody accepted his report .
+# ::alignments 0-1|0 4-5|0.0 2-3|0.0.2 1-2|0.0.2.0 6-7|0.0.1+0.0.1.0 3-4|0.0.0 
+(x1 / and
+	:op1 (x5 / accept-01
+		:ARG0 (x4 / everybody
+			:mod (x2 / this)
+			:mod (x3 / time))
+		:ARG1 (x7 / report-01)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.595 ::id lpp_1943.161 
+# ::tok If I have told you these details about the asteroid , and made a note of its number for you , it is on account of the grown - ups and their ways .
+# ::alignments 24-25|0 11-12|0.1 14-15|0.1.1 17-18|0.1.1.0 3-4|0.1.0 4-5|0.1.0.2 6-7|0.1.0.1 9-10|0.1.0.1.1 1-2|0.1.0.0 30-31|0.0 32-33|0.0.1 27-28|0.0.0 
+(x12 / and
+	:op1 (x4 / tell-01
+		:ARG1 (x7 / detail-01
+			:ARG1 (x10 / asteroid))
+		:ARG2 (x15 / note
+			:ARG1 (x18 / number
+				:quant-of (x20 / you))))
+	:op2 (x25 / account-01
+		:ARG1 (x31 / and
+			:op1 (x30 / up
+				:mod (x28 / grown))
+			:op2 (x33 / way))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.635 ::id lpp_1943.162 
+# ::tok WHen you tell them that you have made a new friend , they never ask you any questions about essential matters .
+# ::alignments 14-15|0 2-3|0.4 12-13|0.4.1 7-8|0.4.0 10-11|0.4.0.0.1 9-10|0.4.0.0.2 1-2|0.3 17-18|0.2 20-21|0.2.1 19-20|0.2.1.0 16-17|0.2.0 6-7|0.4.0.0 
+(x15 / ask-02
+	:ARG1 (x3 / tell-01
+		:ARG2 (x11 / friend
+			:mod (x10 / new)))
+	:ARG1 (x18 / question
+		:mod (x17 / any)
+		:ARG1 (x21 / matter
+			:mod (x20 / essential))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.660 ::id lpp_1943.163 
+# ::tok They never say to you , " What does his voice sound like ?
+# ::alignments 2-3|0 4-5|0.2 11-12|0.1 10-11|0.1.0 0-1|0.0 
+(x3 / say-01
+	:ARG0 (x1 / they)
+	:ARG1 (x5 / you)
+	:ARG1 (x12 / sound
+		:ARG0 (x11 / voice)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.675 ::id lpp_1943.164 
+# ::tok What games does he love best ?
+# ::alignments 4-5|0 5-6|0.2+0.2.0 1-2|0.1.0 3-4|0.0 
+(x5 / love
+	:ARG1 (x2 / game)
+	:manner (x6 / best))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.687 ::id lpp_1943.165 
+# ::tok Does he collect butterflies ? "
+# ::alignments 2-3|0 3-4|0.1 1-2|0.0 
+(x3 / collect-01
+	:ARG1 (x4 / butterfly))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.701 ::id lpp_1943.166 
+# ::tok Instead , they demand : " How old is he ?
+# ::alignments 3-4|0 9-10|0.1.0 2-3|0.0 0-1|0.2 
+(x4 / demand-01
+	:frequency (x1 / instead)
+	:ARG1 (x8 / old))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.717 ::id lpp_1943.167 
+# ::tok How many brothers has he ?
+# ::alignments 4-5|0.1 2-3|0.2 3-4|0 
+(x4 / have-03
+	:ARG0 (x3 / brother
+		:quant (x2 / many)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.725 ::id lpp_1943.168 
+# ::tok How much does he weigh ?
+# ::alignments 4-5|0 3-4|0.0 
+(x5 / weigh
+	:degree (x2 / much))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.739 ::id lpp_1943.169 
+# ::tok How much money does his father make ? "
+# ::alignments 6-7|0 5-6|0.0.0+0.0.0.1 2-3|0.1 
+(x7 / make-01
+	:ARG1 (x3 / money
+		:quant (x2 / much))
+	:ARG0 (x6 / father))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.763 ::id lpp_1943.170 
+# ::tok Only from these figures do they think they have learned anything about him .
+# ::alignments 6-7|0 9-10|0.1 3-4|0.1.1 0-1|0.1.1.0.0 10-11|0.1.0 5-6|0.0 
+(x7 / think-01
+	:mod (x1 / only)
+	:ARG0 (x4 / figure)
+	:ARG1 (x10 / learn-01
+		:ARG1 (x11 / anything)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.856 ::id lpp_1943.171 
+# ::tok If you were to say to the grown - ups : " I saw a beautiful house made of rosy brick , with geraniums in the windows and doves on the roof , " they would not be able to get any idea of that house at all .
+# ::alignments  38-39|0 4-5|0.2 13-14|0.2.1 16-17|0.2.1.0 15-16|0.2.1.0.2 27-28|0.2.1.0.1 28-29|0.2.1.0.1.1 31-32|0.2.1.0.1.1.0 23-24|0.2.1.0.1.0 26-27|0.2.1.0.1.0.0 17-18|0.2.1.0.0 20-21|0.2.1.0.0.0 19-20|0.2.1.0.0.0.0 1-2|0.2.0 40-41|0.1 42-43|0.1.0 46-47|0.1.0.1 47-48|0.1.0.1.0 41-42|0.1.0.0 7-8|0.2.2 
+(x39 / possible
+	:domain (x5 / say-01
+		:ARG1 (x10 / up
+			:mod (x8 / grown)
+			:ARG0-of (x14 / see-01
+				:ARG1 (x17 / house
+					:mod (x16 / beautiful)
+					:subset-of (x21 / brick
+						:mod (x20 / rosy)))
+				:ARG1 (x24 / geranium
+					:location (x28 / and
+						:op1 (x27 / window
+							:ARG1 (x32 / roof))
+						:op2 (x29 / dove))))))
+	:domain (x41 / get-01
+		:ARG1 (x43 / idea
+			:mod (x42 / any)
+			:ARG1 (x46 / house))
+		:location (x48 / all)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.883 ::id lpp_1943.172 
+# ::tok You would have to say to them : " I saw a house that cost $ 20,000 . "
+# ::alignments 4-5|0.0 10-11|0.0.1 12-13|0.0.1.0 14-15|0.0.1.0.0 0-1|0.0.0 
+(x3 / have-03
+	:ARG1 (x5 / say-01
+		:ARG1 (x11 / see-01
+			:ARG1 (x13 / house
+				:ARG1-of (x15 / cost-01
+					:ARG1 (x16 / person
+						:name (n / name
+							:op1 "$")
+						:null_edge (x17 / person
+							:name (n1 / name
+								:op1 "20,000"))))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.895 ::id lpp_1943.173 
+# ::tok Then they would exclaim : " Oh , what a pretty house that is ! "
+# ::alignments 3-4|0 0-1|0.2 10-11|0.1 11-12|0.1.0 12-13|0.1.0.0 1-2|0.0 
+(x4 / exclaim
+	:time (x1 / then)
+	:ARG1 (x12 / house
+		:mod (x11 / pretty)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.933 ::id lpp_1943.174 
+# ::tok Just so , you might say to them : " The proof that the little prince existed is that he was charming , that he laughed , and that he was looking for a sheep .
+# ::alignments 5-6|0.0 27-28|0.0.1.0 31-32|0.0.1.0.2 34-35|0.0.1.0.2.0 25-26|0.0.1.0.1 21-22|0.0.1.0.0 19-20|0.0.1.0.0.0 16-17|0.0.1.1 15-16|0.0.1.1.0 14-15|0.0.1.1.0.0 3-4|0.0.0 0-1|0.0.3 
+(x6 / say-01
+	:degree (x2 / so
+		:degree (x1 / just))
+	:ARG0 (x4 / you)
+	:ARG1 (x12 / proof
+		:ARG1 (x17 / exist-01
+			:ARG0 (x16 / prince
+				:degree (x15 / little)))
+		:ARG1 (x28 / and
+			:op1 (x22 / charming)
+			:op2 (x26 / laugh)
+			:op2 (x32 / look-01
+				:ARG1 (x35 / sheep)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.952 ::id lpp_1943.175 
+# ::tok If anybody wants a sheep , that is a proof that he exists . "
+# ::alignments 2-3|0.0 4-5|0.0.1 1-2|0.0.0 12-13|0.1 
+(x10 / proof
+	:ARG1 (x13 / exist-01
+		:condition (x3 / want-01
+			:ARG0 (x2 / anybody)
+			:ARG1 (x5 / sheep))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.964 ::id lpp_1943.176 
+# ::tok And what good would it do to tell them that ?
+# ::alignments 0-1|0 5-6|0.0 2-3|0.0.1 7-8|0.0.0 9-10|0.0.0.0 
+(x1 / and
+	:op1 (x6 / do-02
+		:ARG1 (x3 / good-41)
+		:ARG1 (x8 / tell-01)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:08.979 ::id lpp_1943.177 
+# ::tok They would shrug their shoulders , and treat you like a child .
+# ::alignments 6-7|0 7-8|0.1 11-12|0.1.1 8-9|0.1.0 2-3|0.0 4-5|0.0.1 0-1|0.0.0 
+(x7 / and
+	:op1 (x3 / shrug
+		:ARG0 (x1 / they)
+		:ARG1 (x5 / shoulder))
+	:op2 (x8 / treat-01
+		:ARG1 (x12 / child)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.021 ::id lpp_1943.178 
+# ::tok But if you said to them : " The planet he came from is Asteroid B - 612 , " then they would be convinced , and leave you in peace from their questions .
+# ::alignments 14-16|0.0.2.1.1.1+0.0.2.1.1.1.0+0.0.2.1.1.1.1 0-1|0 26-27|0.0 3-4|0.0.2 11-12|0.0.2.1 9-10|0.0.2.1.1 10-11|0.0.2.1.0 2-3|0.0.2.0 27-28|0.0.1 30-31|0.0.1.0 33-34|0.0.1.0.0 24-25|0.0.0 21-22|0.0.0.0 
+(x1 / contrast-01
+	:time (x4 / say-01)
+	:ARG2 (x25 / and
+		:op1 (x16 / b-612
+			:ARG0 (x10 / planet
+				:ARG1-of (x12 / come-01))
+			:mod (x15 / asteroid)
+			:ARG1 (x23 / convince-01
+				:time (x19 / then)))
+		:op2 (x26 / leave-01
+			:ARG1 (x29 / peace
+				:ARG2 (x32 / question)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.027 ::id lpp_1943.179 
+# ::tok They are like that .
+# ::alignments 0-1|0.0 3-4|0.1 
+(x / xconcept)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.041 ::id lpp_1943.180 
+# ::tok One must not hold it against them .
+# ::alignments  0-1|0.0 3-4|0.1 5-6|0.1.2 4-5|0.1.1 
+(x4 / hold-04
+	:null_edge 1
+	:ARG1 (x6 / against))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.058 ::id lpp_1943.181 
+# ::tok Children should always show great forbearance toward grown - up people .
+# ::alignments 1-2|0 3-4|0.0 2-3|0.0.3 5-6|0.0.1 4-5|0.0.1.0 0-1|0.0.0 7-8|0.0.2 
+(x2 / recommend-01
+	:ARG1 (x4 / show-01
+		:ARG0 (x1 / child)
+		:time (x3 / always)
+		:ARG1 (x6 / forbearance
+			:mod (x5 / great)
+			:ARG1-of (x8 / grow-03))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.076 ::id lpp_1943.182 
+# ::tok But certainly , for us who understand life , figures are a matter of indifference .
+# ::alignments 0-1|0 6-7|0.0.0.0.0 7-8|0.0.0.0.0.0 9-10|0.0.0.1 1-2|0.0 14-15|0.0.0 
+(x1 / contrast-01
+	:ARG1 (x13 / matter
+		:mod (x2 / certainly)
+		:purpose (x5 / we
+			:ARG0-of (x7 / understand-01))
+		:domain (x10 / figure)
+		:ARG1 (x15 / indifference)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.100 ::id lpp_1943.183 
+# ::tok I should have liked to begin this story in the fashion of the fairy - tales .
+# ::alignments 3-4|0 5-6|0.1 10-11|0.1.1 15-16|0.1.1.0 13-14|0.1.1.0.0 7-8|0.1.0 6-7|0.1.0.0 0-1|0.0 
+(x2 / recommend-01
+	:ARG1 (x4 / like-02
+		:ARG0 (x1 / i)
+		:ARG1 (x6 / begin-01
+			:ARG1 (x8 / story
+				:mod (x7 / this)
+				:location (x11 / fashion
+					:ARG1 (x16 / tale
+						:mod (x14 / fairy)))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.127 ::id lpp_1943.184 
+# ::tok I should have like to say : " Once upon a time there was a little prince who lived on a planet that was scarcely any bigger than himself , and who had need of a sheep ... "
+# ::alignments 3-4|0 5-6|0.1 16-17|0.1.0 33-34|0.1.0.2 36-37|0.1.0.2.0 18-19|0.1.0.1 21-22|0.1.0.1.0 26-27|0.1.0.1.0.0 15-16|0.1.0.0 0-1|0.0 8-9|0.1.0.3 24-25|0.1.0.1.0.0.0.0 
+(x2 / recommend-01
+	:ARG1 (x6 / say-01
+		:ARG1 (x17 / prince
+			:time (x9 / once
+				:op1 (x12 / time))
+			:mod (x16 / little)
+			:ARG0-of (x19 / live-01
+				:ARG1 (x22 / planet)
+				:ARG1 (x27 / big
+					:manner (x25 / scarcely)
+					:mod (x26 / any))
+				:ARG1 (x31 / and
+					:op2 (x33 / have-03
+						:ARG1 (x34 / need-01
+							:ARG1 (x37 / sheep))))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.148 ::id lpp_1943.185 
+# ::tok To those who understand life , that would have given a much greater air of truth to my story .
+# ::alignments 9-10|0 3-4|0.3+0.3.0 4-5|0.3.0.0 18-19|0.2 15-16|0.1 13-14|0.1.0 12-13|0.1.0.0 11-12|0.1.0.0.0.0 6-7|0.0 
+(x10 / give-01
+	:ARG2 (x4 / understand-01)
+	:ARG1 (x14 / air
+		:mod (x13 / great
+			:degree (x12 / much))
+		:ARG1 (x16 / truth))
+	:ARG2 (x19 / story))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.168 ::id lpp_1943.186 
+# ::tok For I do not want any one to read my book carelessly .
+# ::alignments  4-5|0.0 8-9|0.0.1 10-11|0.0.1.1 1-2|0.0.0 11-12|0.0.1.2 
+(x5 / want-01
+	:ARG0 (x2 / i)
+	:ARG1 (x9 / read-01
+		:null_edge (x6 / any
+			:null_edge 1)
+		:ARG1 (x11 / book)
+		:manner (x12 / carelessly)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.192 ::id lpp_1943.187 
+# ::tok I have suffered too much grief in setting down these memories .
+# ::alignments 2-3|0 7-8|0.2 10-11|0.2.0 5-6|0.1 4-5|0.1.0 3-4|0.1.0.0 0-1|0.0 
+(x3 / suffer-01
+	:ARG1 (x6 / grief
+		:quant (x5 / much
+			:degree (x4 / too)))
+	:purpose (x8 / set-05
+		:ARG1 (x11 / memory)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.216 ::id lpp_1943.188 
+# ::tok Six years have already passed since my friend went away from me , with his sheep .
+# ::alignments 8-9|0 3-4|0.4 0-1|0.3.1.0 1-2|0.3.1+0.3.1.1 15-16|0.2 9-10|0.1 7-8|0.0.0.1 2-3|0.0+0.0.0 
+(x5 / pass-01
+	:duration (x2 / temporal-quantity
+		:unit (y / years)
+		:quant 6)
+	:time (x4 / already)
+	:time (x6 / since
+		:op1 (x9 / go-01
+			:ARG1 (x8 / friend)
+			:time (x10 / away)
+			:ARG2 (x16 / sheep))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.229 ::id lpp_1943.189 
+# ::tok If I try to describe him here , it is to make sure that I shall not forget him .
+# ::alignments  17-18|0.0 2-3|0.1 4-5|0.1.1 6-7|0.1.1.1 1-2|0.1.0 
+(x3 / try-01
+	:ARG1 (x5 / describe-01
+		:location (x7 / here))
+	:ARG1 (x13 / sure
+		:domain (x18 / forget)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.234 ::id lpp_1943.190 
+# ::tok To forget a friend is sad .
+# ::alignments 5-6|0 1-2|0.0 3-4|0.0.0.0+0.0.0.0.0 
+(x6 / sad
+	:domain (x2 / forget
+		:ARG1 (x4 / friend)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.248 ::id lpp_1943.191 
+# ::tok Not every one has had a friend .
+# ::alignments 3-4|0 6-7|0.2.0.0 4-5|0.2+0.2.0 1-2|0.1 
+(x5 / have-03
+	:null_edge (x2 / every
+		:null_edge 1)
+	:ARG1 (x7 / friend))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.272 ::id lpp_1943.192 
+# ::tok And if I forget him , I may become like the grown - ups who are no longer interested in anything but figures ...
+# ::alignments 16-17|0.0.0.1.0.0 0-1|0 7-8|0.0 3-4|0.0.1 2-3|0.0.0.0 18-19|0.0.0.1.0 20-21|0.0.0.1.0.1 22-23|0.0.0.1.0.1.0.0 11-12|0.0.0.1 
+(x1 / and
+	:op2 (x8 / possible
+		:domain (x9 / become-01
+			:ARG2 (x4 / forget)
+			:ARG2 (x14 / up
+				:mod (x12 / grown)
+				:ARG1-of (x19 / interest-01
+					:degree (x18 / longer
+						:polarity -)
+					:location (x22 / contrast-01
+						:op1 (x21 / anything)
+						:ARG2 (x23 / figure)))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.279 ::id lpp_1943.193 
+# ::tok It is for that purpose , again , that I have bought a box of paints and some pencils .
+# ::alignments 11-12|0 3-4|0.2 16-17|0.1 18-19|0.1.1 17-18|0.1.1.0 15-16|0.1.0 13-14|0.1.0.0 9-10|0.0 
+(x12 / buy-01
+	:ARG2 (x5 / purpose
+		:mod (x7 / again))
+	:ARG1 (x14 / box
+		:ARG1 (x17 / and
+			:op1 (x16 / paint-03)
+			:op2 (x19 / pencil
+				:quant (x18 / some)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.327 ::id lpp_1943.194 
+# ::tok It is hard to take up drawing again at my age , when I have never made any pictures except those of the boa constrictor from the outside and the boa constrictor from the inside , since I was six .
+# ::alignments 2-3|0 4-5|0.0 7-8|0.0.2 6-7|0.0.1 13-14|0.0.0 16-17|0.0.0.0.0 36-37|0.0.0.0.0.2 10-11|0.0.0.0.0.2.0.0 39-40|0.0.0.0.0.2.0.0.0.0 18-19|0.0.0.0.0.1 19-20|0.0.0.0.0.1.1 28-29|0.0.0.0.0.1.1.0 23-24|0.0.0.0.0.1.1.0.1.0 25-26|0.0.0.0.0.1.1.0.1.0.1 34-35|0.0.0.0.0.1.1.0.1.0.1.0 24-25|0.0.0.0.0.1.1.0.1.0.0 30-31|0.0.0.0.0.1.1.0.0.0 32-33|0.0.0.0.0.1.1.0.0.0.1 27-28|0.0.0.0.0.1.1.0.0.0.1.0 31-32|0.0.0.0.0.1.1.0.0.0.0 17-18|0.0.0.0.0.1.0 
+(x3 / hard-line
+	:ARG2 (x5 / take-01
+		:ARG1 (x7 / draw-03
+			:mod (x8 / again)
+			:ARG2 (x11 / age-01
+				:ARG1 (x19 / picture
+					:mod (x18 / any)
+					:ARG1 (x29 / and
+						:op1 (x25 / constrictor
+							:mod (x24 / boa)
+							:ARG2 (x28 / outside))
+						:op2 (x32 / constrictor
+							:mod (x31 / boa)
+							:ARG1 (x35 / inside)))
+					:time (x37 / since
+						:op1 6))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.348 ::id lpp_1943.195 
+# ::tok I shall certainly try to make my portraits as true to life as possible .
+# ::alignments 3-4|0 5-6|0.1 9-10|0.1.0 13-14|0.1.0.3 11-12|0.1.0.1 7-8|0.1.0.0 0-1|0.0 2-3|0.2 
+(x4 / try-01
+	:manner (x3 / certainly)
+	:ARG1 (x6 / make-01
+		:ARG1 (x10 / true
+			:domain (x8 / portrait)
+			:mod (x14 / possible
+				:domain (x12 / life)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.363 ::id lpp_1943.196 
+# ::tok But I am not at all sure of success .
+# ::alignments  0-1|0 6-7|0.0 4-5|0.0.2 5-6|0.0.2.0 1-2|0.0.0 8-9|0.0.3 
+(x1 / contrast-01
+	:ARG1 (x7 / sure
+		:location (x6 / all)
+		:ARG1 (x9 / succeed-01)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.389 ::id lpp_1943.197 
+# ::tok One drawing goes along all right , and another has no resemblance to its subject .
+# ::alignments 10-11|0.1.2 7-8|0 1-2|0.1.0+0.1.0.0 8-9|0.1.0.1 14-15|0.1.1 2-3|0.0 5-6|0.0.2 4-5|0.0.2.0 3-4|0.0.1 0-1|0.0.0.1 11-12|0.1 
+(x8 / and
+	:op1 (x3 / thing
+		:ARG1-of (g / go)
+		:ARG0 (x2 / draw-01
+			:quant 1)
+		:location (x4 / along))
+	:op2 (x6 / right
+		:null_edge (x5 / all))
+	:op2 (x10 / have-03
+		:ARG0 (x9 / another)
+		:ARG1 (x12 / resemblance
+			:polarity -
+			:ARG1 (x15 / subject))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.425 ::id lpp_1943.198 
+# ::tok I make some errors , too , in the little prince 's height : in one place he is too tall and in another too short .
+# ::alignments 0-1|0.0 12-13|0.1 10-11|0.1.0 9-10|0.1.0.0 5-6|0.2 21-22|0.3 25-26|0.3.1 16-17|0.3.1.1 23-24|0.3.1.1.0 19-20|0.3.1.0 20-21|0.3.0 15-16|0.3.0.1.0 24-25|0.3.0.0 2-3|0.4 
+(x2 / make-01
+	:ARG1 (x4 / error
+		:quant (x3 / some))
+	:degree (x6 / too)
+	:ARG1 (x22 / and
+		:op1 (x21 / tall
+			:location (x17 / place
+				:location (x13 / height
+					:poss (x11 / prince
+						:mod (x10 / little)))
+				:quant 1)
+			:mod (x20 / too)
+			:location (x24 / another)
+			:mod (x26 / short-41
+				:degree (x25 / too)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.444 ::id lpp_1943.199 
+# ::tok And I feel some doubts about the color of his costume .
+# ::alignments 0-1|0 2-3|0.0 4-5|0.0.1 3-4|0.0.1.1 7-8|0.0.1.0 10-11|0.0.1.0.0 1-2|0.0.0 
+(x1 / and
+	:op1 (x3 / feel-01
+		:ARG1 (x5 / doubt-01
+			:quant (x4 / some)
+			:ARG1 (x8 / color
+				:ARG1 (x11 / costume)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.486 ::id lpp_1943.200 
+# ::tok So I fumble along as best I can , now good , now bad , and I hope generally fair - to - middling .
+# ::alignments 2-3|0.0 5-6|0.0.2+0.0.2.0 7-8|0.0.2.4 17-18|0.0.2.3.1 13-14|0.0.2.2 9-10|0.0.2.2.0 10-11|0.0.2.1 12-13|0.0.2.1.0 3-4|0.0.1 1-2|0.0.0 19-20|0.0.2.3 18-19|0.0.2.3.0 
+(x3 / fumble
+	:ARG1 (x8 / possible
+		:domain (x6 / best)
+		:time (x10 / now)
+		:domain (x16 / and
+			:op1 (x14 / bad
+				:mod (x11 / good-41)
+				:time (x13 / now))
+			:op2 (x18 / hope-01
+				:mod (x19 / general)
+				:ARG1 (x24 / middling
+					:mod (x20 / fair))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.494 ::id lpp_1943.201 
+# ::tok In certain more important details I shall make mistakes , also .
+# ::alignments 7-8|0 10-11|0.2 8-9|0.1 4-5|0.1.0 1-2|0.1.0.1 3-4|0.1.0.0 2-3|0.1.0.0.0 5-6|0.0 
+(x5 / detail-01
+	:mod (x2 / certain)
+	:mod (x4 / important
+		:degree (x3 / more))
+	:ARG1 (x9 / mistake)
+	:mod (x11 / also))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.505 ::id lpp_1943.202 
+# ::tok But that is something that will not be my fault .
+# ::alignments  0-1|0 9-10|0.0 3-4|0.0.1 1-2|0.0.1.0 
+(x1 / contrast-01
+	:ARG1 (x4 / something
+		:ARG1 (x10 / fault)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.517 ::id lpp_1943.203 
+# ::tok My friend never explained anything to me .
+# ::alignments 3-4|0 4-5|0.2 1-2|0.1.0+0.1.0.0 
+(x4 / explain-01
+	:ARG0 (x2 / friend)
+	:ARG1 (x5 / anything)
+	:ARG2 (x7 / i))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.526 ::id lpp_1943.204 
+# ::tok He thought , perhaps , that I was like himself .
+# ::alignments 1-2|0 3-4|0.2 6-7|0.1.0 0-1|0.0 
+(x2 / think-01
+	:ARG0 (x1 / he)
+	:manner (x4 / perhaps)
+	:ARG1 (x10 / himself))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.545 ::id lpp_1943.205 
+# ::tok But I , alas , do not know how to see sheep through the walls of boxes .
+# ::alignments  0-1|0 3-4|0.1 7-8|0.0 10-11|0.0.2+0.0.2.0 12-13|0.0.2.0.1 14-15|0.0.2.0.1.0 16-17|0.0.2.0.1.0.0 11-12|0.0.2.0.0 1-2|0.0.1 
+(x1 / contrast-01
+	:ARG1 (x8 / know-01
+		:ARG1 (x4 / alas)
+		:ARG1 (x11 / see-01
+			:ARG1 (x12 / sheep)
+			:ARG1 (x15 / wall
+				:ARG1 (x17 / box)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.558 ::id lpp_1943.206 
+# ::tok Perhaps I am a little like the grown - ups .
+# ::alignments 1-2|0.0 0-1|0.2 4-5|0.3 7-8|0.1 
+(x5 / little
+	:degree (x1 / perhaps)
+	:ARG2 (x10 / up
+		:mod (x8 / grown)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.569 ::id lpp_1943.207 
+# ::tok I have had to grow old .
+# ::alignments 0-1|0.0 4-5|0.1 5-6|0.1.0 
+(x3 / have-03
+	:ARG1 (x5 / grow-03
+		:mod (x6 / old)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.573 ::id lpp_1943.208 
+# ::tok Chapter 5 .
+# ::alignments 0-1|0 1-2|0.0 
+(x1 / chapter
+	:quant 5)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.598 ::id lpp_1943.209 
+# ::tok As each day passed I would learn , in our talk , something about the little prince 's planet , his departure from it , his journey .
+# ::alignments 6-7|0 10-11|0.3 3-4|0.2 2-3|0.2.0 1-2|0.2.0.0 12-13|0.1.0 18-19|0.1.0.0 16-17|0.1.0.0.0 15-16|0.1.0.0.0.0 26-27|0.1.2 4-5|0.0 21-22|0.1.1 
+(x7 / learn-01
+	:time (x4 / pass-01
+		:ARG0 (x3 / temporal-quantity
+			:unit (d / day)))
+	:ARG1 (x11 / talk-01)
+	:ARG1 (x13 / something
+		:ARG1 (x19 / planet
+			:poss (x17 / prince
+				:mod (x16 / little)
+				:month (x22 / depart-01)))
+		:mod (x27 / journey)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.622 ::id lpp_1943.210 
+# ::tok The information would come very slowly , as it might chance to fall from his thoughts .
+# ::alignments 3-4|0 12-13|0.2 4-5|0.1.0 1-2|0.0 5-6|0.1 
+(x4 / come-01
+	:ARG1 (x2 / information)
+	:manner (x6 / slow-41
+		:degree (x5 / very)
+		:condition (x11 / chance
+			:ARG1 (x13 / fall-07
+				:ARG2 (x16 / thought)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.636 ::id lpp_1943.211 
+# ::tok It was in this way that I heard , on the third day , about the catastrophe of the baobabs .
+# ::alignments 7-8|0 12-13|0.3 3-4|0.2 16-17|0.1 19-20|0.1.0 6-7|0.0 
+(x8 / hear-01
+	:location (x5 / way
+		:mod (x4 / this))
+	:duration (x13 / day)
+	:ARG1 (x17 / catastrophe
+		:ARG1 (x20 / baobab)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.649 ::id lpp_1943.212 
+# ::tok This time , once more , I had the sheep to thank for it .
+# ::alignments 11-12|0.0 13-14|0.0.2 9-10|0.0.1 6-7|0.0.0 1-2|0.1 0-1|0.1.0 
+(x8 / have-03
+	:ARG0 (x2 / time
+		:mod (x1 / this))
+	:degree (x5 / more
+		:time (x4 / once))
+	:ARG1 (x10 / sheep)
+	:ARG2 (x12 / thank
+		:ARG0 x2))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.675 ::id lpp_1943.213 
+# ::tok For the little prince asked me abruptly -- as if seized by a grave doubt -- " It is true , is n't it , that sheep eat little bushes ? "
+# ::alignments 4-5|0 10-11|0.4 14-15|0.4.0 13-14|0.4.0.0 19-20|0.1 27-28|0.1.1 29-30|0.1.1.1 2-3|0.1.1.1.0 26-27|0.1.1.0 3-4|0.0 28-29|0.0.0 6-7|0.3 
+(x28 / eat-01
+	:time (x5 / ask-01
+		:ARG0 (x4 / prince
+			:mod (x3 / little))
+		:mod (x7 / abruptly)
+		:time (x20 / true
+			:domain (x11 / seize-01
+				:ARG0 (x15 / doubt-01
+					:mod (x14 / grave)))))
+	:ARG0 (x27 / sheep)
+	:ARG1 (x30 / bush
+		:mod (x29 / little)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.680 ::id lpp_1943.214 
+# ::tok " Yes , that is true . "
+# ::alignments 5-6|0 3-4|0.0 
+(x2 / yes
+	:ARG1 (x6 / true))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.682 ::id lpp_1943.215 
+# ::tok " Ah !
+# ::alignments 1-2|0 
+(x2 / ah)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.692 ::id lpp_1943.216 
+# ::tok I am glad ! "
+# ::alignments 2-3|0 0-1|0.0 
+(x3 / glad)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.709 ::id lpp_1943.217 
+# ::tok I did not understand why it was so important that sheep should eat little bushes .
+# ::alignments  3-4|0 8-9|0.2 11-12|0.2.1 12-13|0.2.1.0 14-15|0.2.1.0.1 13-14|0.2.1.0.1.0 10-11|0.2.1.0.0 7-8|0.2.0 0-1|0.1 
+(x12 / recommend-01
+	:ARG1 (x4 / understand-01)
+	:ARG1 (x9 / important
+		:degree (x8 / so))
+	:ARG1 (x13 / eat-01
+		:ARG0 (x11 / sheep)
+		:ARG1 (x15 / bush
+			:mod (x14 / little))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.720 ::id lpp_1943.218 
+# ::tok But the little prince added : " Then it follows that they also eat baobabs ? "
+# ::alignments 0-1|0 4-5|0.0 9-10|0.0.1 13-14|0.0.1.0 12-13|0.0.1.0.2 14-15|0.0.1.0.1 11-12|0.0.1.0.0 3-4|0.0.0 2-3|0.0.0.0 
+(x1 / contrast-01
+	:ARG1 (x5 / add-01
+		:ARG0 (x4 / prince
+			:degree (x3 / little))
+		:ARG1 (x10 / follow-01
+			:time (x8 / then)
+			:ARG1 (x14 / eat-01
+				:mod (x13 / also)
+				:ARG1 (x15 / baobab)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.765 ::id lpp_1943.219 
+# ::tok I pointed out to the little prince that baobabs were not little bushes , but , on the contrary , trees as big as castles ; and that even if he took a whole herd of elephants away with him , the herd would not eat up one single baobab .
+# ::alignments  1-2|0 6-7|0.2 5-6|0.2.0 25-26|0.1 45-46|0.1.1 31-32|0.1.1.2.0 34-35|0.1.1.2.0.0 33-34|0.1.1.2.0.0.1 36-37|0.1.1.2.0.0.0 8-9|0.1.1.1 48-49|0.1.1.1.1 47-48|0.1.1.1.0 20-21|0.1.0 12-13|0.1.0.2.0 11-12|0.1.0.2.0.0 49-50|0.1.0.1 22-23|0.1.0.0 24-25|0.1.0.0.0 0-1|0.0 28-29|0.1.1.2 
+(x / xconcept
+	:x (x26 / and
+		:op1 (x2 / point-01
+			:ARG2 (x7 / prince
+				:mod (x6 / little))
+			:ARG1 (x15 / contrast-01
+				:ARG1 (x13 / bush
+					:ARG1 (x9 / baobab)
+					:mod (x12 / little))
+				:ARG2 (x19 / contrary-41)
+				:ARG1 (x27 / and)))
+		:op2 (x21 / tree
+			:mod (x23 / big))
+		:op2 (x25 / castle)
+		:op2 (x29 / even)
+		:op1 (x32 / take-01
+			:ARG1 (x35 / herd
+				:mod (x34 / whole)
+				:ARG1 (x37 / elephant))
+			:null_edge (x38 / away))
+		:op2 (x46 / eat-01
+			:ARG0 x9
+			:ARG0 (x43 / herd)
+			:ARG1 (x50 / baobab
+				:quant 1
+				:mod (x49 / single)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.773 ::id lpp_1943.220 
+# ::tok The idea of the herd of elephants made the little prince laugh .
+# ::alignments 7-8|0 11-12|0.1 10-11|0.1.0 9-10|0.1.0.0 1-2|0.0 4-5|0.0.0 6-7|0.0.0.0 
+(x11 / prince
+	:ARG1 (x2 / idea
+		:ARG1 (x5 / herd
+			:ARG1 (x7 / elephant)))
+	:degree (x10 / little)
+	:ARG1 (x12 / laugh))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.784 ::id lpp_1943.221 
+# ::tok " We would have to put them one on top of the other , " he said .
+# ::alignments 16-17|0 1-2|0.1.0.0 15-16|0.0 
+(x17 / say-01
+	:ARG1 (x4 / have-03
+		:ARG1 (x6 / put-03
+			:ARG2 (x10 / top
+				:quant (x8 / one)
+				:mod (x13 / other)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.799 ::id lpp_1943.222 
+# ::tok But he made a wise comment : " Before they grow so big , the baobabs start out by being little . "
+# ::alignments 0-1|0 5-6|0.0 4-5|0.0.2 16-17|0.0.1 8-9|0.0.1.2 10-11|0.0.1.2.0 12-13|0.0.1.2.0.0 11-12|0.0.1.2.0.0.0 20-21|0.0.1.1 15-16|0.0.1.0 1-2|0.0.0 
+(x1 / contrast-01
+	:ARG1 (x6 / comment-01
+		:mod (x5 / wise))
+	:ARG1 (x17 / start-01
+		:time (x9 / before
+			:op1 (x11 / grow-03
+				:ARG1 (x13 / big
+					:degree (x12 / so))))
+		:ARG0 (x16 / baobab)
+		:ARG0 (x21 / little)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.806 ::id lpp_1943.223 
+# ::tok " That is strictly correct , "
+# ::alignments 4-5|0 1-2|0.1 3-4|0.0 
+(x5 / correct
+	:degree (x4 / strict))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.808 ::id lpp_1943.224 
+# ::tok I said .
+# ::alignments 1-2|0 0-1|0.0 
+(x2 / say-01
+	:ARG0 (x1 / i))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.824 ::id lpp_1943.225 
+# ::tok " But why do you want the sheep to eat the little baobabs ? "
+# ::alignments 1-2|0 5-6|0.0.1 9-10|0.0.1.1 12-13|0.0.1.1.1 11-12|0.0.1.1.1.0 7-8|0.0.1.1.0 4-5|0.0.1.0 
+(x2 / contrast-01
+	:ARG1 (x6 / want-01
+		:ARG0 (x5 / you)
+		:ARG1 (x8 / sheep)
+		:purpose (x10 / eat-01
+			:ARG1 (x13 / baobab
+				:mod (x12 / little)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.837 ::id lpp_1943.226 
+# ::tok He answered me at once , " Oh , come , come ! " , as if he were speaking of something that was self - evident .
+# ::alignments 1-2|0 19-20|0.4 21-22|0.4.0 9-10|0.2 0-1|0.0 24-25|0.4.0.0 
+(x2 / answer-01
+	:ARG0 (x1 / he)
+	:ARG1 (x3 / i)
+	:time (x5 / once)
+	:ARG1 (x8 / oh
+		:ARG1 (x10 / come-01)
+		:null_edge (x12 / come-01))
+	:time (x20 / speak-01
+		:ARG1 (x22 / something
+			:mod (x27 / evident))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.856 ::id lpp_1943.227 
+# ::tok And I was obliged to make a great mental effort to solve this problem , without any assistance .
+# ::alignments 0-1|0 3-4|0.0 1-2|0.0.0.0 11-12|0.0.0.1 13-14|0.0.0.1.0 12-13|0.0.0.1.0.0 8-9|0.0.0.2 7-8|0.0.0.3 17-18|0.0.0.1.1 
+(x1 / and
+	:op1 (x4 / oblige
+		:ARG1 (x6 / make-01
+			:ARG1 (x10 / effort
+				:mod (x8 / great)
+				:mod (x9 / mental)
+				:purpose (x12 / solve-01
+					:ARG1 (x14 / problem
+						:mod (x13 / this))))
+			:ARG1 (x18 / assist-01
+				:mod (x17 / any)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.886 ::id lpp_1943.228 
+# ::tok Indeed , as I learned , there were on the planet where the little prince lived -- as on all planets -- good plants and bad plants .
+# ::alignments 24-25|0.0 0-1|0.0.2 23-24|0.0.1 25-26|0.0.1.0 26-27|0.0.0 22-23|0.0.0.0 10-11|0.1.0 15-16|0.1.0.0 14-15|0.1.0.0.0 13-14|0.1.0.0.0.0 20-21|0.1.1 19-20|0.1.1.0 4-5|0.2 3-4|0.2.0 
+(x5 / learn-01
+	:time (x1 / indeed)
+	:ARG1 (x11 / planet
+		:ARG0-of (x16 / live-01
+			:ARG0 (x15 / prince
+				:mod (x14 / little))
+			:ARG1 (x21 / planet
+				:quant (x20 / all))
+			:ARG1 (x25 / and
+				:op1 (x24 / plant
+					:mod (x23 / good-41))
+				:op2 (x27 / plant
+					:mod (x26 / bad))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.898 ::id lpp_1943.229 
+# ::tok In consequence , there were good seeds from good plants , and bad seeds from bad plants .
+# ::alignments 11-12|0 6-7|0.1 9-10|0.1.1 12-13|0.1.1.0 15-16|0.1.0 13-14|0.0 16-17|0.0.1 5-6|0.0.1.0 8-9|0.0.0 
+(x2 / consequence
+	:ARG1 (x12 / and
+		:op1 (x7 / seed
+			:mod (x6 / good-41)
+			:source (x10 / plant
+				:mod (x9 / good-41)))
+		:op2 (x14 / seed
+			:mod (x13 / bad)
+			:source (x17 / plant
+				:mod (x16 / bad)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.907 ::id lpp_1943.230 
+# ::tok But seeds are invisible .
+# ::alignments 0-1|0 3-4|0.0+0.0.0 1-2|0.0.1 
+(x1 / contrast-01
+	:ARG1 (x4 / invisible
+		:domain (x2 / seed)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.933 ::id lpp_1943.231 
+# ::tok They sleep deep in the heart of the earth 's darkness , until some one among them is seized with the desire to awaken .
+# ::alignments 1-2|0 12-13|0.2 18-19|0.2.0 6-7|0.2.0.1.0 21-22|0.2.0.0 23-24|0.2.0.0.0 5-6|0.1 10-11|0.1.1 8-9|0.1.1.0 2-3|0.1.0 0-1|0.0 13-14|0.2.0.1 
+(x2 / sleep
+	:ARG0 (x1 / they)
+	:mod (x3 / deep)
+	:ARG1 (x11 / darkness
+		:poss (x9 / planet
+			:name (n / name
+				:op1 "earth")))
+	:time (x13 / until
+		:op1 (x19 / seize-01
+			:null_edge (x14 / some
+				:quant 1)
+			:ARG2 (x22 / desire-01
+				:ARG1 (x24 / awaken)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.953 ::id lpp_1943.232 
+# ::tok Then this little seed will stretch itself and begin -- timidly at first -- to push a charming little sprig inoffensively upward toward the sun .
+# ::alignments 7-8|0 0-1|0.2 8-9|0.1 15-16|0.1.0 21-22|0.1.0.1 24-25|0.1.0.1.0 19-20|0.1.0.0 17-18|0.1.0.0.1 2-3|0.1.0.0.0 5-6|0.0 3-4|0.0.0 1-2|0.0.0.1 18-19|0.0.0.0 10-11|0.1.1 20-21|0.1.0.2+0.1.0.2.0 
+(x8 / and
+	:op1 (x6 / stretch
+		:time (x1 / then)
+		:ARG0 (x4 / seed
+			:mod (x2 / this)
+			:mod (x3 / little)))
+	:op2 (x9 / begin-01
+		:ARG1 (x16 / push-01
+			:ARG1 (x20 / sprig
+				:mod (x18 / charming)
+				:mod (x19 / little))
+			:manner (x22 / upward
+				:mod (x21 / inoffensively))
+			:ARG2 (x25 / sun))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.968 ::id lpp_1943.233 
+# ::tok If it is only a sprout of radish or the sprig of a rose - bush , one would let it grow wherever it might wish .
+# ::alignments 17-18|0.0 21-22|0.1 25-26|0.1.0 8-9|0.2 1-2|0.2.3 3-4|0.2.2 10-11|0.2.1 15-16|0.2.1.0 13-14|0.2.1.0.0 5-6|0.2.0 7-8|0.2.0.0 
+(x20 / let-01
+	:ARG1 (x9 / or
+		:op1 (x5 / name
+			:op1 "a"
+			:mod (x4 / only)
+			:op1 (x8 / radish))
+		:op2 (x11 / sprig
+			:ARG1-of (x12 / include-91)))
+	:null_edge 1
+	:ARG1 (x22 / grow-03
+		:condition (x26 / wish-01
+			:manner (x23 / wherever))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:09.990 ::id lpp_1943.234 
+# ::tok But when it is a bad plant , one must destroy it as soon as possible , the very first instant that one recognizes it .
+# ::alignments 0-1|0 10-11|0.0.0 13-14|0.0.0.2 15-16|0.0.0.2.1 20-21|0.0.0.1 8-9|0.0.0.1.1.0 18-19|0.0.0.1.1.1 23-24|0.0.0.1.0 22-23|0.0.0.0 6-7|0.0.1 2-3|0.0.1.1 5-6|0.0.1.0 
+(x1 / contrast-01
+	:ARG1 (x11 / destroy-01
+		:ARG1 (x7 / plant
+			:mod (x6 / bad))
+		:quant 1
+		:ARG1 (x16 / possible
+			:time (x14 / soon))
+		:ARG1 (x21 / instant
+			:degree (x19 / very)
+			:ARG0-of (x24 / recognize-02))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.022 ::id lpp_1943.235 
+# ::tok Now there were some terrible seeds on the planet that was the home of the little prince ; and these were the seeds of the baobab .
+# ::alignments 5-6|0.0 25-26|0.0.2 3-4|0.0.1 4-5|0.0.0 8-9|0.1 12-13|0.1.0 16-17|0.1.0.0 15-16|0.1.0.0.0 0-1|0.2 
+(x / xconcept
+	:x (x18 / and
+		:op1 (x9 / planet)
+		:op1 (x17 / prince
+			:mod (x16 / little))
+		:op1 (x19 / and
+			:op2 (x6 / seed
+				:mod (x4 / some
+					:time (x1 / now))
+				:mod (x5 / terrible)
+				:mod (x13 / home)))
+		:op3 (x23 / seed)
+		:op1 (x26 / baobab)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.040 ::id lpp_1943.236 
+# ::tok The soil of that planet was infested with them .
+# ::alignments 6-7|0 1-2|0.0 4-5|0.0.0 3-4|0.0.0.0 
+(x7 / infested
+	:domain (x2 / soil
+		:ARG1 (x5 / planet)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.065 ::id lpp_1943.237 
+# ::tok A baobab is something you will never , never be able to get rid of if you attend to it too late .
+# ::alignments 10-11|0 17-18|0.2 21-22|0.2.0 20-21|0.2.0.0 4-5|0.1.0 1-2|0.1.1 
+(x4 / something
+	:ARG0 (x2 / baobab)
+	:ARG1 (x11 / possible
+		:domain (x13 / get-03)
+		:domain (x18 / attend-01
+			:time (x22 / late
+				:degree (x21 / too)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.073 ::id lpp_1943.238 
+# ::tok It spreads over the entire planet .
+# ::alignments 1-2|0 5-6|0.1 4-5|0.1.0 0-1|0.0 
+(x2 / spread-03
+	:ARG1 (x6 / planet
+		:mod (x5 / entire)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.081 ::id lpp_1943.239 
+# ::tok It bores clear through it with its roots .
+# ::alignments 1-2|0 7-8|0.2 3-4|0.1 2-3|0.1.1 0-1|0.1.0 4-5|0.0 
+(x2 / bore
+	:ARG1 (x3 / clear)
+	:ARG2 (x8 / root))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.096 ::id lpp_1943.240 
+# ::tok And if the planet is too small , and the baobabs are too many , they split it in pieces ...
+# ::alignments 0-1|0 16-17|0.0 8-9|0.0.1 10-11|0.0.1.1 13-14|0.0.1.1.0 5-6|0.0.1.1.0.0 6-7|0.0.1.0 3-4|0.0.1.0.1 12-13|0.0.1.0.0 19-20|0.0.0 
+(x1 / and
+	:op1 (x17 / split-01
+		:ARG1 (x9 / and
+			:op1 (x7 / small
+				:domain (x4 / planet)
+				:mod (x6 / too))
+			:op2 (x14 / many
+				:domain (x11 / baobab)
+				:degree (x13 / too)))
+		:location (x20 / piece)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.118 ::id lpp_1943.241 
+# ::tok " It is a question of discipline , " the little prince said to me later on .
+# ::alignments 12-13|0 15-16|0.3 4-5|0.1 1-2|0.1.1 6-7|0.1.0 11-12|0.0 10-11|0.0.0 
+(x13 / say-01
+	:ARG1 (x5 / question
+		:ARG1 (x7 / discipline))
+	:ARG0 (x12 / prince
+		:degree (x11 / little))
+	:ARG1 (x15 / i)
+	:time (x16 / late))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.127 ::id lpp_1943.242 
+# ::tok " When you 've finished your own toilet in the morning , then it is time to attend to the toilet of your planet , just so , with the greatest care .
+# ::alignments 17-18|0 4-5|0.3 10-11|0.3.2 7-8|0.3.1 2-3|0.3.0 31-32|0.2 30-31|0.2.0+0.2.0.0 20-21|0.1 23-24|0.1.0 
+(x5 / finish-01
+	:ARG1 (x8 / toilet)
+	:time (x11 / morning)
+	:ARG0 (x14 / it
+		:time (x13 / then))
+	:purpose (x18 / attend-01
+		:ARG2 (x21 / toilet
+			:ARG1 (x24 / planet)))
+	:mod (x27 / so
+		:mod (x26 / just))
+	:ARG1 (x32 / care
+		:mod (x31 / great
+			:degree (g / greatest))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.155 ::id lpp_1943.243 
+# ::tok You must see to it that you pull up regularly all the baobabs , at the very first moment when they can be distinguished from the rosebushes which they resemble so closely in their earliest youth .
+# ::alignments 7-8|0.0 18-19|0.0.3 21-22|0.0.3.1 23-24|0.0.3.1.0 26-27|0.0.3.1.0.0 29-30|0.0.3.1.0.0.0 35-36|0.0.3.1.0.0.0.1 34-35|0.0.3.1.0.0.0.1.0 30-31|0.0.3.1.0.0.0.0.0 16-17|0.0.3.0.1 12-13|0.0.1 10-11|0.0.1.0 0-1|0.0.0 31-32|0.0.3.1.0.0.0.0 9-10|0.0.2 
+(x3 / see-01
+	:ARG0 (x1 / you)
+	:ARG1 (x8 / pull-02
+		:frequency (x10 / regular)
+		:ARG1 (x13 / baobab
+			:quant (x11 / all))
+		:time (x19 / moment
+			:mod (x18 / first
+				:degree (x17 / very))
+			:mod (x22 / possible
+				:domain (x24 / distinguish
+					:ARG2 (x27 / rosebush
+						:ARG0-of (x30 / resemble
+							:manner (x32 / close
+								:degree (x31 / so))
+							:purpose (x36 / youth
+								:mod (x35 / earliest)))))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.172 ::id lpp_1943.244 
+# ::tok It is very tedious work , " the little prince added , " but very easy . "
+# ::alignments 10-11|0 13-14|0.1 15-16|0.1.1 2-3|0.1.1.0 3-4|0.1.0 4-5|0.1.0.1 14-15|0.1.0.0 9-10|0.0 8-9|0.0.0 
+(x14 / contrast-01
+	:ARG1 (x11 / add-01
+		:ARG1 (x5 / work-01
+			:mod (x4 / tedious
+				:degree (x3 / very)))
+		:ARG0 (x10 / prince
+			:degree (x9 / little))
+		:ARG1 (x16 / easy
+			:degree (x15 / very))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.197 ::id lpp_1943.245 
+# ::tok And one day he said to me : " You ought to make a beautiful drawing , so that the children where you live can see exactly how all this is .
+# ::alignments 0-1|0 4-5|0.0 2-3|0.0.3 1-2|0.0.3.0 15-16|0.0.1.0 24-25|0.0.1.0.1 25-26|0.0.1.0.1.0 29-30|0.0.1.0.1.0.1 28-29|0.0.1.0.1.0.1.0 20-21|0.0.1.0.1.0.0 23-24|0.0.1.0.1.0.0.0 14-15|0.0.1.0.0.0 3-4|0.0.0 26-27|0.0.1.0.1.0.2 
+(x1 / and
+	:op1 (x11 / ought
+		:domain (x3 / temporal-quantity
+			:unit (d / day)
+			:quant 1
+			:ARG1-of (x5 / say-01
+				:ARG1 (x7 / i)))
+		:domain (x10 / you)
+		:ARG1 (x13 / make-01
+			:ARG0 x10
+			:ARG1 (x16 / draw-01
+				:mod (x15 / beautiful))
+			:purpose (x25 / possible
+				:domain (x26 / see-01
+					:manner (x18 / so)
+					:ARG0 (x21 / child
+						:ARG0-of (x24 / live-01))
+					:ARG1 (x28 / how
+						:degree (x27 / exactly)
+						:ARG1 (x30 / this
+							:mod (x29 / all))))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.207 ::id lpp_1943.246 
+# ::tok That would be very useful to them if they were to travel some day .
+# ::alignments 4-5|0 11-12|0.3 13-14|0.3.0 12-13|0.3.0.0 0-1|0.2 8-9|0.1 3-4|0.0 
+(x5 / useful
+	:degree (x4 / very)
+	:domain (x12 / travel-01
+		:age (x14 / temporal-quantity
+			:unit (d / day)
+			:quant (x13 / some))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.219 ::id lpp_1943.247 
+# ::tok Sometimes , " he added , " there is no harm in putting off a piece of work until another day .
+# ::alignments 9-10|0.1.0 4-5|0 10-11|0.1 0-1|0.1.2 12-13|0.1.1 20-21|0.1.1.1 19-20|0.1.1.1.0 17-18|0.1.1.0+0.1.1.0.0 15-16|0.1.1.0.1 3-4|0.0 
+(x5 / add-01
+	:time (x1 / sometimes)
+	:ARG1 (x13 / put-03
+		:polarity -
+		:ARG1 (x16 / piece
+			:mod (x18 / work-01))
+		:duration (x21 / day
+			:mod (x20 / another))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.234 ::id lpp_1943.248 
+# ::tok But when it is a matter of baobabs , that always means a catastrophe .
+# ::alignments 0-1|0 11-12|0.0 7-8|0.0.3 10-11|0.0.2 13-14|0.0.1 9-10|0.0.0 
+(x1 / contrast-01
+	:ARG1 (x12 / mean-01
+		:ARG1 (x6 / matter
+			:ARG1 (x8 / baobab))
+		:time (x11 / always)
+		:ARG1 (x14 / catastrophe)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.237 ::id lpp_1943.249 
+# ::tok I knew a planet that was inhabited by a lazy man .
+# ::alignments 1-2|0 3-4|0.1 6-7|0.1.0 10-11|0.1.0.0 9-10|0.1.0.0.0 0-1|0.0 
+(x2 / know-01
+	:ARG0 (x1 / i)
+	:ARG1 (x4 / planet
+		:ARG1-of (x7 / inhabit
+			:ARG0 (x11 / man
+				:mod (x10 / lazy)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.244 ::id lpp_1943.250 
+# ::tok He neglected three little bushes ... "
+# ::alignments 1-2|0 4-5|0.1 2-3|0.1.1 3-4|0.1.0 0-1|0.0 
+(x2 / neglect
+	:ARG0 (x1 / he)
+	:ARG1 (x5 / bush
+		:quant 3
+		:mod (x4 / little)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.255 ::id lpp_1943.251 
+# ::tok So , as the little prince described it to me , I have made a drawing of that planet .
+# ::alignments 15-16|0 6-7|0.2 5-6|0.2.0 4-5|0.2.0.0 18-19|0.1 17-18|0.1.0 11-12|0.0 
+(x16 / draw-01
+	:mod (x1 / so)
+	:time (x7 / describe-01
+		:ARG0 (x6 / prince
+			:degree (x5 / little))
+		:ARG2 (x10 / i))
+	:ARG1 (x19 / planet))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.268 ::id lpp_1943.252 
+# ::tok I do not much like to take the tone of a moralist .
+# ::alignments  4-5|0 3-4|0.3 6-7|0.2 8-9|0.2.0 11-12|0.2.0.0 0-1|0.1 
+(x5 / like-02
+	:degree (x4 / much)
+	:ARG1 (x7 / take-01
+		:ARG1 (x9 / tone
+			:ARG1 (x12 / moralist))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.291 ::id lpp_1943.253 
+# ::tok But the danger of the baobabs is so little understood , and such considerable risks would be run by anyone who might get lost on an asteroid , that for once I am breaking through my reserve .
+# ::alignments 0-1|0 11-12|0.0.0 14-15|0.0.0.1 13-14|0.0.0.1.1 12-13|0.0.0.1.1.0 19-20|0.0.0.1.0 23-24|0.0.0.1.0.0 26-27|0.0.0.1.0.0.0 9-10|0.0.0.0 8-9|0.0.0.0.1 7-8|0.0.0.0.1.0 2-3|0.0.0.0.0 5-6|0.0.0.0.0.0 33-34|0.0.1 36-37|0.0.1.1 31-32|0.0.1.0 
+(x1 / contrast-01
+	:ARG2 (x12 / and
+		:op1 (x10 / understood
+			:ARG1 (x3 / danger
+				:poss (x6 / baobab))
+			:degree (x9 / little
+				:degree (x8 / so)))
+		:op2 (x18 / run-01
+			:ARG1 (x15 / risk-01
+				:mod (x13 / such)
+				:mod (x14 / considerable))
+			:ARG0 (x20 / anyone
+				:ARG0-of (x24 / lose-06
+					:purpose (x23 / get-01)
+					:ARG1 (x27 / asteroid)))
+			:ARG1 (x34 / break-01
+				:time (x31 / once)
+				:name-of (x37 / reserve-01)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.297 ::id lpp_1943.254 
+# ::tok " Children , "
+# ::alignments 1-2|0 
+(x2 / children)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.301 ::id lpp_1943.255 
+# ::tok I say plainly , " watch out for the baobabs ! "
+# ::alignments 1-2|0 5-6|0.1 9-10|0.1.2 0-1|0.0 2-3|0.2 
+(x2 / say-01
+	:time (x3 / plainly)
+	:ARG1 (x6 / watch-01
+		:ARG2 (x10 / baobab)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.330 ::id lpp_1943.256 
+# ::tok My friends , like myself , have been skirting this danger for a long time , without ever knowing it ; and so it is for them that I have worked so hard over this drawing .
+# ::alignments 8-9|0.0 18-19|0.0.3 17-18|0.0.3.1 14-15|0.0.2 13-14|0.0.2.0 10-11|0.0.1 9-10|0.0.1.0 20-21|0.0.0 28-29|0.0.0.0.0.0 1-2|0.0.0.0.0.1 30-31|0.1 32-33|0.1.1 22-23|0.1.1.0 35-36|0.1.0.0 34-35|0.1.0.1 6-7|0.0.0.0+0.0.0.0.0 
+(x22 / and
+	:op1 (x9 / skirt
+		:ARG0 (x2 / friend)
+		:ARG1 (x11 / danger
+			:mod (x10 / this))
+		:duration (x14 / long)
+		:ARG1 (x31 / work-01
+			:manner (x33 / hard
+				:degree (x32 / so))
+			:ARG1 (x36 / draw-01
+				:mod (x35 / this)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.349 ::id lpp_1943.257 
+# ::tok The lesson which I pass on by this means is worth all the trouble it has cost me .
+# ::alignments 10-11|0 1-2|0.1 4-5|0.1.0 7-8|0.1.0.1 3-4|0.1.0.0 13-14|0.0 11-12|0.0.1 16-17|0.0.0 
+(x14 / trouble
+	:domain (x2 / lesson
+		:ARG0-of (x5 / pass-01
+			:ARG0 (x9 / mean-01
+				:mod (x8 / this))))
+	:quant (x12 / all)
+	:ARG1-of (x17 / cost-01))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.371 ::id lpp_1943.258 
+# ::tok Perhaps you will ask me , " Why are there no other drawing in this book as magnificent and impressive as this drawing of the baobabs ? "
+# ::alignments 10-11|0.0.1.0.0.0 3-4|0.0 12-13|0.0.1.0.0.1 11-12|0.0.1.0.0.2 15-16|0.0.1.0.0.3 14-15|0.0.1.0.0.3.0 17-18|0.0.1.0.0.4 22-23|0.0.1.0.0.4.1.0 21-22|0.0.1.0.0.4.1.1 25-26|0.0.1.0.0.4.1.2 1-2|0.0.0 19-20|0.0.1.0.0.5 
+(x4 / ask-02
+	:time (x1 / perhaps)
+	:ARG0 (x2 / you)
+	:ARG1 (x13 / draw-01
+		:polarity -
+		:mod (x12 / other)
+		:ARG1 (x19 / and
+			:op1 (x16 / book
+				:mod (x15 / this))
+			:op1 (x18 / magnificent)
+			:op2 (x20 / impressive
+				:ARG2 (x23 / draw-01
+					:mod (x22 / this)
+					:ARG1 (x26 / baobab))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.381 ::id lpp_1943.259 
+# ::tok The reply is simple .
+# ::alignments 3-4|0 1-2|0.0+0.0.0 
+(x4 / simple
+	:domain (x2 / reply))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.383 ::id lpp_1943.260 
+# ::tok I have tried .
+# ::alignments 2-3|0 0-1|0.0 
+(x3 / try-01)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.394 ::id lpp_1943.261 
+# ::tok But with the others I have not been successful .
+# ::alignments  0-1|0 4-5|0.0.1 3-4|0.0.2 8-9|0.0 
+(x1 / contrast-01
+	:ARG1 (x9 / succeed-01
+		:mod (x4 / other)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.408 ::id lpp_1943.262 
+# ::tok When I made the drawing of the baobabs I was carried beyond myself by the inspiring force of urgent necessity .
+# ::alignments 10-11|0 4-5|0.3 7-8|0.3.0 11-12|0.2 1-2|0.1 16-17|0.0 15-16|0.0.1 19-20|0.0.0 18-19|0.0.0.0 
+(x11 / carry-03
+	:ARG1 (x5 / draw-01
+		:ARG1 (x8 / baobab))
+	:ARG1 (x9 / i)
+	:ARG2 (x13 / myself)
+	:ARG0 (x17 / force
+		:mod (x16 / inspire-01)
+		:ARG1 (x20 / necessity
+			:mod (x19 / urgent))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.411 ::id lpp_1943.263 
+# ::tok Chapter 6 .
+# ::alignments 0-1|0 1-2|0.0 
+(x1 / chapter
+	:quant 6)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.418 ::id lpp_1943.264 
+# ::tok Oh , little prince !
+# ::alignments 3-4|0 2-3|0.0 
+(x4 / prince
+	:ARG1 (x1 / oh)
+	:degree (x3 / little))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.430 ::id lpp_1943.265 
+# ::tok Bit by bit I came to understand the secrets of your sad little life ...
+# ::alignments 6-7|0 8-9|0.1 13-14|0.1.0 11-12|0.1.0.2 12-13|0.1.0.1 3-4|0.0 
+(x1 / bit
+	:ARG0 (x3 / bit)
+	:ARG1 (x5 / come-01
+		:ARG1 (x7 / understand-01
+			:ARG1 (x9 / secret
+				:ARG1 (x14 / life
+					:mod (x12 / sad)
+					:mod (x13 / little))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.443 ::id lpp_1943.266 
+# ::tok For a long time you had found your only entertainment in the quiet pleasure of looking at the sunset .
+# ::alignments 6-7|0 3-4|0.2 2-3|0.2.0 15-16|0.1.0 13-14|0.1.0.1 12-13|0.1.0.1.0 18-19|0.1.0.0 8-9|0.1.1 4-5|0.0 9-10|0.1 
+(x7 / find-01
+	:duration (x3 / long)
+	:ARG0 (x5 / you)
+	:ARG1 (x10 / entertain-01
+		:mod (x9 / only))
+	:ARG1 (x16 / look-01
+		:mod (x13 / quiet)
+		:time (x19 / date-entity)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.463 ::id lpp_1943.267 
+# ::tok I learned that new detail on the morning of the fourth day , when you said to me : " I am very fond of sunsets .
+# ::alignments 1-2|0 15-16|0.3 25-26|0.3.1.0 22-23|0.3.1.1 14-15|0.3.0 7-8|0.2 11-12|0.2.0 4-5|0.1 2-3|0.1.1 3-4|0.1.0 0-1|0.0 
+(x2 / learn-01
+	:ARG0 (x1 / i)
+	:ARG1 (x5 / detail-01
+		:mod (x4 / new))
+	:time (x12 / day
+		:quant (x8 / morning
+			:ARG1-of (x16 / say-01
+				:ARG1 (x18 / i)
+				:ARG1 (x24 / fond
+					:degree (x23 / very)
+					:time (x26 / date-entity))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.470 ::id lpp_1943.268 
+# ::tok Come , let us go look at a sunset now . "
+# ::alignments 0-1|0.0 4-5|0.1 5-6|0.1.1 9-10|0.1.1.2 8-9|0.1.1.1 
+(x1 / come-01
+	:ARG1 (x3 / let-01
+		:ARG1 (x5 / go-01
+			:ARG0 (x4 / we)
+			:ARG1 (x6 / look-01
+				:time (x9 / date-entity)
+				:time (x10 / now)))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.476 ::id lpp_1943.269 
+# ::tok " But we must wait , "
+# ::alignments 1-2|0 4-5|0.0.0 2-3|0.0.0.0 
+(x2 / contrast-01
+	:ARG1 (x5 / wait-01
+		:ARG0 (x3 / we)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.479 ::id lpp_1943.270 
+# ::tok I said .
+# ::alignments 1-2|0 0-1|0.0 
+(x2 / say-01
+	:ARG0 (x1 / i))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.485 ::id lpp_1943.271 
+# ::tok " Wait ?
+# ::alignments 1-2|0 
+(x2 / wait-01)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.492 ::id lpp_1943.272 
+# ::tok For what ? "
+# ::alignments  
+(x1 / for)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.497 ::id lpp_1943.273 
+# ::tok " For the sunset .
+# ::alignments 3-4|0.0 
+(x4 / date-entity)
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.502 ::id lpp_1943.274 
+# ::tok We must wait until it is time . "
+# ::alignments 2-3|0.0 3-4|0.0.1 6-7|0.0.1.0 0-1|0.0.0 
+(x3 / wait-01
+	:ARG0 (x1 / we)
+	:time (x4 / until))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.512 ::id lpp_1943.275 
+# ::tok At first you seemed to be very much surprised .
+# ::alignments 3-4|0 8-9|0.0 7-8|0.0.1 6-7|0.0.1.0 2-3|0.0.0 
+(x4 / seem-01
+	:ARG0 (x3 / you)
+	:ARG1 (x9 / surprised
+		:degree (x8 / much
+			:degree (x7 / very))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.515 ::id lpp_1943.276 
+# ::tok And then you laughed to yourself .
+# ::alignments 0-1|0 3-4|0.0 1-2|0.0.1 2-3|0.0.0 
+(x1 / and
+	:op1 (x4 / laugh
+		:time (x2 / then)
+		:ARG0 (x3 / you)
+		:ARG2 (x6 / yourself)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.529 ::id lpp_1943.277 
+# ::tok You said to me : " I am always thinking that I am at home ! "
+# ::alignments 1-2|0 6-7|0.2 9-10|0.1 8-9|0.1.1 14-15|0.1.0.0 0-1|0.0 
+(x2 / say-01
+	:ARG0 (x1 / you)
+	:ARG1 (x4 / i)
+	:ARG1 (x10 / think-01
+		:time (x9 / always)
+		:ARG1 (x15 / home)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.531 ::id lpp_1943.278 
+# ::tok Just so .
+# ::alignments 1-2|0 0-1|0.0 
+(x2 / so
+	:mod (x1 / just))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.543 ::id lpp_1943.279 
+# ::tok Everybody knows that when it is noon in the United States the sun is setting over France .
+# ::alignments 16-17|0.1.1+0.1.1.1+0.1.1.1.0 9-11|0.1.2.1+0.1.2.1.1+0.1.2.1.1.0+0.1.2.1.1.1 1-2|0 14-15|0.1 12-13|0.1.0 0-1|0.0 
+(x2 / know-01
+	:ARG0 (x1 / everybody)
+	:ARG1 (x15 / set-08
+		:time (x7 / date-entity
+			:location (x10 / country
+				:name (n1 / name
+					:op1 "United"
+					:op2 "States")))
+		:ARG0 (x13 / sun)
+		:null_edge (x17 / country
+			:name (n / name
+				:op1 "France"))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.563 ::id lpp_1943.280 
+# ::tok If you could fly to France in one minute , you could go straight into the sunset , right from noon .
+# ::alignments 5-6|0.1.0.2+0.1.0.2.1+0.1.0.2.1.0 2-3|0 11-12|0.1 3-4|0.1.0 7-8|0.1.0.1.0 8-9|0.1.0.1+0.1.0.1.1 1-2|0.1.0.0 12-13|0.0 13-14|0.0.2 16-17|0.0.1 
+(x12 / possible
+	:domain (x13 / go-01
+		:ARG1 (x3 / possible
+			:domain (x4 / fly-01
+				:ARG4 (x6 / country
+					:name (n / name
+						:op1 "France"))
+				:duration (x9 / temporal-quantity
+					:unit (m / minute)
+					:quant 1)))
+		:ARG0 (x11 / you)
+		:manner (x14 / straight)
+		:time (x17 / date-entity)
+		:ARG2 (x19 / right
+			:time (x21 / date-entity))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.567 ::id lpp_1943.281 
+# ::tok Unfortunately , France is too far away for that .
+# ::alignments 2-3|0.1.0+0.1.0.1+0.1.0.1.0 6-7|0.1.1 5-6|0.1.1.0 4-5|0.1.1.0.0 8-9|0.1.2 
+(x1 / unfortunately
+	:ARG0 (x3 / country
+		:name (n / name
+			:op1 "France"))
+	:null_edge (x7 / away
+		:degree (x5 / too)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.586 ::id lpp_1943.282 
+# ::tok But on your tiny planet , my little prince , all you need do is move your chair a few steps .
+# ::alignments 0-1|0.0 15-16|0.0.0.0 20-21|0.0.0.0.1 19-20|0.0.0.0.1.0 17-18|0.0.0.0.0 4-5|0.0.0.1 8-9|0.0.0.1.1 7-8|0.0.0.1.1.0 3-4|0.0.0.1.0 
+(x1 / contrast-01
+	:ARG1 (x16 / move-01
+		:ARG2 (x5 / planet
+			:mod (x4 / tiny
+				:month (x9 / prince
+					:degree (x8 / little))))
+		:ARG0 (x12 / you
+			:null_edge (x11 / all))
+		:ARG1 (x18 / chair-01)
+		:ARG1 (x21 / step
+			:quant (x20 / few))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.602 ::id lpp_1943.283 
+# ::tok You can see the day end and the twilight falling whenever you like ...
+# ::alignments 1-2|0 2-3|0.0 12-13|0.0.2 6-7|0.0.1 9-10|0.0.1.1 8-9|0.0.1.1.0 5-6|0.0.1.0 4-5|0.0.1.0.0 0-1|0.0.0 
+(x2 / possible
+	:domain (x3 / see-01
+		:ARG0 (x1 / you)
+		:ARG1 (x7 / and
+			:op1 (x6 / end
+				:null_edge (x5 / null_tag))
+			:op2 (x9 / date-entity
+				:ARG0-of (x10 / fall-09
+					:time (x13 / like-02))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.624 ::id lpp_1943.284 
+# ::tok " One day , " you said to me , " I saw the sunset forty - four times ! "
+# ::alignments 6-7|0 11-12|0.2 12-13|0.1 2-3|0.1.2 1-2|0.1.2.0 14-15|0.1.1 5-6|0.0 
+(x13 / see-01
+	:duration (x3 / temporal-quantity
+		:unit (d / day)
+		:quant 1)
+	:ARG1-of (x7 / say-01
+		:ARG0 (x6 / you)
+		:ARG1 (x9 / i))
+	:ARG0 (x12 / i)
+	:time (x15 / date-entity)
+	:ARG1 (x19 / times
+		:null_edge (x16 / forty)
+		:quant 4))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.648 ::id lpp_1943.285 
+# ::tok And a little later you added : " You know -- one loves the sunset , when one is so sad ... "
+# ::alignments 0-1|0 5-6|0.0 3-4|0.0.2 2-3|0.0.2.0.0 9-10|0.0.1 12-13|0.0.1.1 20-21|0.0.1.1.2 19-20|0.0.1.1.2.0 14-15|0.0.1.1.1 11-12|0.0.1.1.0 4-5|0.0.1.0 8-9|0.0.0 
+(x1 / and
+	:op1 (x6 / add-01
+		:time (x4 / late
+			:degree (x3 / little))
+		:ARG0 (x5 / you)
+		:ARG1 (x10 / know-01
+			:ARG1 (x13 / love
+				:quant 1
+				:time (x15 / date-entity
+					:ARG0-of (x21 / sad))))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.663 ::id lpp_1943.286 
+# ::tok " Were you so sad , then ? "
+# ::alignments 4-5|0 3-4|0.3 6-7|0.2 2-3|0.1 
+(x3 / you
+	:mod (x5 / sad
+		:degree (x4 / so)
+		:time (x7 / then)))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.672 ::id lpp_1943.287 
+# ::tok I asked , " on the day of the forty - four sunsets ? "
+# ::alignments 1-2|0 6-7|0.1.0 12-13|0.1.0.0 0-1|0.0 
+(x2 / ask-02
+	:time (x7 / day
+		:part-of (x10 / forty
+			:time (x13 / date-entity
+				:quant 4))))
+
+# ::annotator Aligner v.02  ::date 2016-02-23T14:10:10.682 ::id lpp_1943.288 
+# ::tok But the little prince made no reply .
+# ::alignments 5-6|0.0.0 0-1|0 6-7|0.0 3-4|0.0.1 2-3|0.0.1.0 
+(x1 / contrast-01
+	:ARG1 (x4 / prince
+		:degree (x3 / little))
+	:ARG1 (x7 / reply
+		:polarity -))
+
