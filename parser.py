@@ -284,7 +284,7 @@ class Parser(object):
                 n_parsed_tag_total +=  n_parsed_tag
                 n_gold_tag_total += n_gold_tag
 
-
+            '''
             print >> self.elog,"Parsing on %s instances takes %s" % (str(i),datetime.timedelta(seconds=round(time.time()-start_time,0)))
             p = n_correct_total/n_parsed_total if n_parsed_total != .0 else .0
             r = n_correct_total/n_gold_total
@@ -303,7 +303,7 @@ class Parser(object):
             print "Confusion matrix action class:"
             np.set_printoptions(suppress=True)
             print np.round(np.divide(Parser.cm,10))
-
+            '''
         return span_graph_pairs, parsed_amr
     def _parse(self,instance):
         self.perceptron.no_update()

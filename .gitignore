@@ -56,7 +56,6 @@ docs/_build/
 # temp/
 stanfordnlp/stanford-corenlp-full-2013-06-20*
 stanfordnlp/stanford-parser-full-2014-01-04*
-smatch*/
 .idea*
 # cache
 *~
