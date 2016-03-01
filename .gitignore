@@ -59,4 +59,12 @@ stanfordnlp/stanford-parser-full-2014-01-04*
 .idea*
 # cache
 *~
+*.amr.tok
+*.sent
+*.sent.prp
+*.sent.tok
+*.all.parsed
+*.sent.tok.charniak.parse
+*.sent.tok.charniak.parse.dep
+*.eval.parsed
 scripts/*~
