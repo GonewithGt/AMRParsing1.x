@@ -16,6 +16,7 @@ import cPickle as pickle
 #import matplotlib
 #matplotlib.use('Agg')
 #import matplotlib.pyplot as plt
+import Queue
 
 DRAW_GRAPH = False
 WRITE_FAKE_AMR = False
@@ -305,10 +306,50 @@ class Parser(object):
             print np.round(np.divide(Parser.cm,10))
             '''
         return span_graph_pairs, parsed_amr
+
+
+    def parse_beam_corpus_test(self, instances,k=10):
+        parsed_amr = []
+        i =0
+        for i,inst in enumerate(instances,1):
+            step,state = self.parse_beam(inst,k)
+            parsed_amr.append(GraphState.get_parsed_amr(state.A))
+        return parsed_amr
+
     def _parse(self,instance):
         self.perceptron.no_update()
         return (True,Parser.State.init_state(instance,self.verbose))
-    
+
+
+    class ScoredElement(object):
+        def __init__(self, el, score):
+            self.el = el
+            self.score = score
+
+        def __cmp__(self, other):
+            return cmp(self.score, other.score)
+
+        def __str__(self):
+            return str(self.el) + ', ' + str(self.score)
+
+    def parse_beam(self, instance,k=10):
+        ref_graph = instance.gold_graph
+        beam = Queue.PriorityQueue()
+        beam.put(Parser.State.init_state(instance,self.verbose))
+        best_parse = None
+        while not beam.empty():
+            old_beam = list(beam)
+            beam = Queue.PriorityQueue()
+            for state in old_beam:
+                actions = state.get_possible_actions(False)
+                features = map(state.make_feat,actions)
+                scores = map(state.get_score,(act['type'] for act in actions),features,[False]*len(actions))
+                best_act_ind, best_label_index = self.get_best_act(scores,actions)#,argset)
+                best_act = actions[best_act_ind]
+                best_label = Parser.get_index_label(best_act,best_label_index)
+
+
+
     def parse(self,instance,train=True): 
         # no beam; pseudo deterministic oracle
         state = Parser.State.init_state(instance,self.verbose)
