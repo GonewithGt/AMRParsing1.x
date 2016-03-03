@@ -22,6 +22,18 @@ DRAW_GRAPH = False
 WRITE_FAKE_AMR = False
 OUTPUT_PARSED_AMR = True
 
+class ScoredElement(object):
+        def __init__(self, el, score):
+            self.el = el
+            self.score = score
+
+        def __cmp__(self, other):
+            return cmp(self.score, other.score)
+
+        def __str__(self):
+            return str(self.el) + ', ' + str(self.score)
+
+
 class Parser(object):
     """
     """
@@ -66,7 +78,21 @@ class Parser(object):
         if best_act['type'] in ACTION_WITH_EDGE or best_act['type'] in ACTION_WITH_TAG:
             best_label_index = scores[best_act_ind].argmax()
         return best_act_ind, best_label_index
-        
+
+    def get_k_best_act(self, scores,actions,k):
+        beam = Queue.PriorityQueue()
+        for act_ind in range(0, len(scores)):
+            for label_ind in range(0, len(scores[act_ind])):
+                act = actions[act_ind]
+                if act['type'] in ACTION_WITH_EDGE or act['type'] in ACTION_WITH_TAG:
+                    beam.put(ScoredElement((act_ind,label_ind),scores[act_ind][label_ind]))
+                else:
+                    beam.put(ScoredElement((act_ind,None),scores[act_ind][label_ind]))
+                if beam.qsize() > k:
+                    beam.get()
+        return self.priority_queue_to_list(beam)
+
+
     def get_best_act_constraint(self,scores,actions,argset):
         best_label_index = None
         best_act_ind = np.argmax(map(np.amax,scores))
@@ -312,7 +338,7 @@ class Parser(object):
         parsed_amr = []
         i =0
         for i,inst in enumerate(instances,1):
-            step,state = self.parse_beam(inst,k)
+            state = self.parse_beam(inst,k)
             parsed_amr.append(GraphState.get_parsed_amr(state.A))
         return parsed_amr
 
@@ -321,34 +347,50 @@ class Parser(object):
         return (True,Parser.State.init_state(instance,self.verbose))
 
 
-    class ScoredElement(object):
-        def __init__(self, el, score):
-            self.el = el
-            self.score = score
+    def priority_queue_to_list(self,queue):
+        result =[]
+        while not queue.empty():
+            result.append(queue.get())
+        return result
 
-        def __cmp__(self, other):
-            return cmp(self.score, other.score)
-
-        def __str__(self):
-            return str(self.el) + ', ' + str(self.score)
-
-    def parse_beam(self, instance,k=10):
-        ref_graph = instance.gold_graph
+    def parse_beam(self, instance, k = 10):
         beam = Queue.PriorityQueue()
-        beam.put(Parser.State.init_state(instance,self.verbose))
+        beam.put(ScoredElement(Parser.State.init_state(instance,self.verbose),0))
         best_parse = None
+        step=0
         while not beam.empty():
-            old_beam = list(beam)
+            step += 1
+            old_beam = self.priority_queue_to_list(beam)
             beam = Queue.PriorityQueue()
-            for state in old_beam:
+            for scored_state in old_beam:
+                state = scored_state.el
+
+                if state.is_terminal():
+                    if best_parse is None or best_parse.score < scored_state.score:
+                        best_parse = scored_state
+                    continue
+
                 actions = state.get_possible_actions(False)
-                features = map(state.make_feat,actions)
-                scores = map(state.get_score,(act['type'] for act in actions),features,[False]*len(actions))
-                best_act_ind, best_label_index = self.get_best_act(scores,actions)#,argset)
-                best_act = actions[best_act_ind]
-                best_label = Parser.get_index_label(best_act,best_label_index)
+                if len(actions) == 1 :
+                    act = actions[0]
+                    beam.put(ScoredElement(state.pcopy().apply(act),scored_state.score))
 
-
+                else:
+                    features = map(state.make_feat,actions)
+                    scores = map(state.get_score,(act['type'] for act in actions),features,[False]*len(actions))
+                    for scored_el in self.get_k_best_act(scores,actions,k):
+                        (act_ind,label_ind) = scored_el.el
+                        act_label_score = scored_el.score
+                        act = actions[act_ind]
+                        label = Parser.get_index_label(act,label_ind)
+                        if act['type'] in ACTION_WITH_EDGE:
+                            act['edge_label'] = label
+                        elif act['type'] in ACTION_WITH_TAG:
+                            act['tag'] = label
+                        beam.put(ScoredElement(state.pcopy().apply(act),scored_state.score+act_label_score))
+                        if beam.qsize() > k:
+                            beam.get()
+        return best_parse.el
 
     def parse(self,instance,train=True): 
         # no beam; pseudo deterministic oracle

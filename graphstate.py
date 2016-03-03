@@ -12,7 +12,7 @@ from constants import *
 from common.SpanGraph import SpanGraph
 from common.AMRGraph import *
 import numpy as np
-
+import copy
 
 
 class ActionError(Exception):
