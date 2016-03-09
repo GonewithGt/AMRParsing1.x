@@ -21,6 +21,8 @@ import argparse
 from preprocessing import *
 import constants
 from graphstate import GraphState
+from smatch_v1_0.smatch_modified import *
+
 #import matplotlib.pyplot as plt
 
 reload(sys)
@@ -133,13 +135,16 @@ def main():
     #arg_parser.add_argument('-i','--input_file',help='the input: preprocessed data instances file for aligner or training')
     arg_parser.add_argument('-d','--dev',help='development file')
     arg_parser.add_argument('-as','--actionset',choices=['basic'],default='basic',help='choose different action set')
-    arg_parser.add_argument('-m','--mode',choices=['preprocess','test_gold_graph','align','userGuide','oracleGuide','train','parse','eval','parse_eval'],help="preprocess:generate pos tag, dependency tree, ner\n" "align:do alignment between AMR graph and sentence string")
+    arg_parser.add_argument('-m','--mode',choices=['train_beam', 'preprocess','test_gold_graph','align','userGuide','oracleGuide','train','parse','eval','parse_eval'],help="preprocess:generate pos tag, dependency tree, ner\n" "align:do alignment between AMR graph and sentence string")
     arg_parser.add_argument('-dp','--depparser',choices=['stanford','stanfordConvert','stdconv+charniak','clear','mate','turbo'],default='stdconv+charniak',help='choose the dependency parser')
     arg_parser.add_argument('--coref',action='store_true',help='flag to enable coreference information')
     arg_parser.add_argument('--prop',action='store_true',help='flag to enable semantic role labeling information')
+    arg_parser.add_argument('--i_model',help='specify the model file')
     arg_parser.add_argument('--model',help='specify the model file')
     arg_parser.add_argument('--feat',help='feature template file')
     arg_parser.add_argument('-iter','--iterations',default=1,type=int,help='training iterations')
+    arg_parser.add_argument('-start_iter','--start_iteration',default=0,type=int,help='training iterations')
+    arg_parser.add_argument('-k','--k',default=10,type=int,help='beam size')
     arg_parser.add_argument('amr_file',nargs='?',help='amr annotation file/input sentence file for parsing')
     arg_parser.add_argument('--amrfmt',action='store_true',help='specifying the input file is AMR annotation file')
     arg_parser.add_argument('-e','--eval',nargs=2,help='Error Analysis: give parsed AMR file and gold AMR file')
@@ -339,7 +344,57 @@ def main():
                 write_parsed_amr(parsed_amr,dev_instances,args.dev,args.section+'.'+str(iter)+'.parsed')
 
         print >> experiment_log ,"DONE TRAINING!"
-        
+    elif args.mode == 'train_beam': # training
+        print "Parser Config:"
+        print "Incorporate Coref Information: %s"%(constants.FLAG_COREF)
+        print "Incorporate SRL Information: %s"%(constants.FLAG_PROP)
+        print "Dependency parser used: %s"%(constants.FLAG_DEPPARSER)
+        train_instances = preprocess(amr_file,START_SNLP=False)
+        if args.dev: dev_instances = preprocess(args.dev,START_SNLP=False)
+
+
+        if args.section != 'all':
+            print "Choosing corpus section: %s"%(args.section)
+            tcr = constants.get_corpus_range(args.section,'train')
+            train_instances = train_instances[tcr[0]:tcr[1]]
+            if args.dev:
+                dcr = constants.get_corpus_range(args.section,'dev')
+                dev_instances = dev_instances[dcr[0]:dcr[1]]
+
+
+        feat_template = args.feat if args.feat else None
+        start_it = args.start_iteration
+        if(start_it != 0):
+            model = Model.load_model(args.i_model)
+            model.elog = experiment_log
+        else:
+            model = Model(elog=experiment_log)
+        #model.output_feature_generator()
+        parser = Parser(model=model,oracle_type=DET_T2G_ORACLE_ABT,action_type=args.actionset,verbose=args.verbose,elog=experiment_log)
+        model.setup(action_type=args.actionset,instances=train_instances,parser=parser,feature_templates_file=feat_template)
+
+        print >> experiment_log, "BEGIN TRAINING!"
+        for iter in xrange(1+start_it,args.iterations+1):
+            print >> experiment_log, "shuffling training instances"
+            random.shuffle(train_instances)
+
+            print >> experiment_log, "Iteration:",iter
+            begin_updates = parser.perceptron.get_num_updates()
+            parser.parse_corpus_beam_train(train_instances, args.k)
+            parser.perceptron.average_weight()
+            #model.save_model(args.model+'-iter'+str(iter)+'-'+str(int(time.time()))+'.m')
+            model.save_model(args.model+'-beam-iter'+str(iter)+'.m')
+            if args.dev:
+                print >> experiment_log ,"Result on develop set:"
+                parsed_amr = parser.parse_beam_corpus_test(dev_instances,args.k)
+                parsed_amr_path = args.dev +'-'+args.section+'.'+str(iter)
+                write_parsed_amr(parsed_amr,dev_instances,parsed_amr_path)
+                (precision, recall, f_score) = eval(parsed_amr_path+'.parsed',args.dev)
+                print "Precision: %.3f" % precision
+                print "Recall: %.3f" % recall
+                print "Document F-score: %.3f" % f_score
+        print >> experiment_log ,"DONE TRAINING!"
+
     elif args.mode == 'parse': # actual parsing
         test_instances = preprocess(amr_file,START_SNLP=False,INPUT_AMR=False)
         if args.section != 'all':

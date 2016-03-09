@@ -34,6 +34,16 @@ class ScoredElement(object):
             return str(self.el) + ', ' + str(self.score)
 
 
+class BeamTrainState(object):
+    def __init__(self,is_gold,act_ind, label_ind, act, label, features,score):
+        self.is_gold = is_gold
+        self.act_ind=act_ind
+        self.label_ind =label_ind
+        self.act = act
+        self.label = label
+        self.features = features
+        self.score =score
+
 class Parser(object):
     """
     """
@@ -333,13 +343,133 @@ class Parser(object):
             '''
         return span_graph_pairs, parsed_amr
 
+    def contains_gold(self, beam):
+        for scored_el in beam:
+            state,is_gold = scored_el.el
+            if is_gold:
+                return True
+        return False
 
-    def parse_beam_corpus_test(self, instances,k=10):
+
+    def train_beam(self, instance, k = 10):
+
+        ref_graph = instance.gold_graph
+        oracle_state = Parser.State.init_state(instance,self.verbose)
+
+        beam = Queue.PriorityQueue()
+        beam.put(ScoredElement((Parser.State.init_state(instance,self.verbose),True),0))
+        step=0
+        beam = self.priority_queue_to_list(beam)
+        while (not oracle_state.is_terminal()) and len(beam) > 0:
+            step += 1
+            violated = False
+            gold_act, gold_label = Parser.oracle.give_ref_action(oracle_state,ref_graph)
+            gold_actions = oracle_state.get_possible_actions(True)
+            try:
+                gold_act_ind = gold_actions.index(gold_act)
+            except ValueError:
+                if gold_act['type'] != NEXT2:
+                    violated = True # violated the constraint
+                gold_actions.append(gold_act)
+                gold_act_ind = len(gold_actions)-1
+            if len(gold_actions) == 1 and step == 1:
+                gold_features = None
+            else:
+                gold_features = oracle_state.make_feat(gold_act)
+
+            gold_label_index = Parser.get_label_index(gold_act,gold_label)
+
+            old_beam = beam
+            beam = Queue.PriorityQueue()
+            best_scored_state = None
+            for scored_state in old_beam:
+                state, is_gold = scored_state.el
+                if(state.is_terminal()):
+                    continue
+                actions = state.get_possible_actions(True)
+                if len(actions) == 1 and step ==1:
+                    act = actions[0]
+                    beam.put(ScoredElement((state.pcopy().apply(act),True),scored_state.score))
+                    best_scored_state = BeamTrainState(True,0,0,act,None,None,0)
+                else:
+                    features = map(state.make_feat,actions)
+                    if(is_gold and gold_act_ind == len(actions)):
+                        features.append(gold_features)
+                        actions.append(gold_act)
+
+                    scores = map(state.get_score,(act['type'] for act in actions),features,[True]*len(actions))
+                    for scored_el in self.get_k_best_act(scores,actions,k):
+                        (act_ind,label_ind) = scored_el.el
+
+                        act_label_score = scored_el.score
+                        act = actions[act_ind]
+                        label = Parser.get_index_label(act,label_ind)
+                        is_current_gold = False
+                        if is_gold and act_ind ==gold_act_ind and (label == gold_label or gold_label_index==label_ind):
+                            is_current_gold = True
+                        if act['type'] in ACTION_WITH_EDGE:
+                            act['edge_label'] = label
+                        elif act['type'] in ACTION_WITH_TAG:
+                            act['tag'] = label
+                        new_scored_state = ScoredElement((state.pcopy().apply(act),is_current_gold),scored_state.score+act_label_score)
+                        if best_scored_state is None or best_scored_state.score < new_scored_state.score:
+                            best_scored_state = BeamTrainState(is_current_gold,act_ind,label_ind,act,label,features[act_ind],new_scored_state.score)
+                        beam.put(new_scored_state)
+                        if beam.qsize() > k:
+                            beam.get()
+            beam = self.priority_queue_to_list(beam)
+            if len(beam) == 0 or best_scored_state is None:
+                return
+
+            if (gold_features is not None) and (not best_scored_state.is_gold) and (not violated) :
+                self.perceptron.update_weight_one_step(gold_act['type'],gold_features,gold_label_index,best_scored_state.act['type'],best_scored_state.features,best_scored_state.label_ind)
+
+            else:
+                self.perceptron.no_update()
+            best_act = gold_act
+            best_label = gold_label
+            act_to_apply = best_act
+            if act_to_apply['type'] in ACTION_WITH_EDGE:
+                act_to_apply['edge_label'] = best_label
+            elif act_to_apply['type'] in ACTION_WITH_TAG:
+                act_to_apply['tag'] = best_label
+
+            oracle_state = oracle_state.apply(act_to_apply)
+            if not self.contains_gold(beam):
+
+                    for scored_state in old_beam:
+                         state, is_gold = scored_state.el
+                         if is_gold:
+                            gold_act_score = state.get_score(gold_act['type'], gold_features, True)[gold_label_index]
+                            beam.append(ScoredElement((oracle_state.pcopy(),True),scored_state.score+ gold_act_score))
+                            break
+
+    def parse_corpus_beam_train(self, instances, k):
+        start_time = time.time()
+        i =0
+        percent = int(len(instances)/100)
+        for instance in instances:
+            self.train_beam(instance,k)
+            i = i + 1
+            if i >= percent and i%(percent) ==0:
+                print >> self.elog,"Training on %s instances takes %s" % (str(i),datetime.timedelta(seconds=round(time.time()-start_time,0)))
+        print >> self.elog,"One pass on %s instances takes %s" % (str(len(instances)),datetime.timedelta(seconds=round(time.time()-start_time,0)))
+
+    def parse_beam_corpus_test(self, instances,k=10, skip = 0, Train = False):
+        start_time = time.time()
         parsed_amr = []
         i =0
-        for i,inst in enumerate(instances,1):
-            state = self.parse_beam(inst,k)
+        skipped  = 0
+        for inst in instances:
+            if skipped< skip:
+                skipped+=1
+                continue
+            i+=1
+            state = self.parse_beam(inst,k, Train)
             parsed_amr.append(GraphState.get_parsed_amr(state.A))
+            print >> self.elog,"Parse on %s instances takes %s" % (str(i),datetime.timedelta(seconds=round(time.time()-start_time,0)))
+
+        print >> self.elog,"One pass on %s instances takes %s" % (str(len(instances)),datetime.timedelta(seconds=round(time.time()-start_time,0)))
         return parsed_amr
 
     def _parse(self,instance):
@@ -353,7 +483,7 @@ class Parser(object):
             result.append(queue.get())
         return result
 
-    def parse_beam(self, instance, k = 10):
+    def parse_beam(self, instance, k = 10, Train = False):
         beam = Queue.PriorityQueue()
         beam.put(ScoredElement(Parser.State.init_state(instance,self.verbose),0))
         best_parse = None
@@ -370,14 +500,14 @@ class Parser(object):
                         best_parse = scored_state
                     continue
 
-                actions = state.get_possible_actions(False)
+                actions = state.get_possible_actions(Train)
                 if len(actions) == 1 :
                     act = actions[0]
                     beam.put(ScoredElement(state.pcopy().apply(act),scored_state.score))
 
                 else:
                     features = map(state.make_feat,actions)
-                    scores = map(state.get_score,(act['type'] for act in actions),features,[False]*len(actions))
+                    scores = map(state.get_score,(act['type'] for act in actions),features,[Train]*len(actions))
                     for scored_el in self.get_k_best_act(scores,actions,k):
                         (act_ind,label_ind) = scored_el.el
                         act_label_score = scored_el.score
