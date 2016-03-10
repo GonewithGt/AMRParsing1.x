@@ -383,8 +383,8 @@ def main():
             parser.parse_corpus_beam_train(train_instances, args.k)
             parser.perceptron.average_weight()
             #model.save_model(args.model+'-iter'+str(iter)+'-'+str(int(time.time()))+'.m')
-            model.save_model(args.model+'-beam-iter'+str(iter)+'.m')
-            if args.dev:
+            model.save_model(args.model+'-beam-iter'+str(iter)+'k-'+str(args.k)+'.m')
+            if False and args.dev:
                 print >> experiment_log ,"Result on develop set:"
                 parsed_amr = parser.parse_beam_corpus_test(dev_instances,args.k)
                 parsed_amr_path = args.dev +'-'+args.section+'.'+str(iter)

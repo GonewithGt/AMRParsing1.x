@@ -17,6 +17,8 @@ from collections import defaultdict
 _FEATURE_TEMPLATES_FILE = './feature/basic_abt_feats.templates'
 
 class Model():
+
+    eps = 0.00001
     """weights and templates"""
     #weight = None
     #n_class = None
@@ -45,6 +47,7 @@ class Model():
         self.class_codebook = None
         self.feature_codebook = None
         self.rel_codebook = Alphabet()
+        self.wstep = 1
         self.tag_codebook = {
             'Concept':Alphabet(),
             'ETag':Alphabet(),
@@ -211,11 +214,13 @@ class Model():
         #self.aux_weight = [np.zeros(shape = (init_feature_dim,nt,nr),dtype=WEIGHT_DTYPE) for nr,nt in zip(n_rel,n_tag)]
         #self.avg_weight = [np.zeros(shape = (init_feature_dim,nt,nr),dtype=WEIGHT_DTYPE) for nr,nt in zip(n_rel,n_tag)]
 
-        self.weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
-        self.aux_weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
-        self.avg_weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
+        #self.weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
+       #self.aux_weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
+        #self.avg_weight = [np.zeros(shape = (init_feature_dim,ns),dtype=WEIGHT_DTYPE) for ns in n_subclass]
+        self.weight = [np.asarray([{} for i in range(0,ns)]) for ns in n_subclass]
+        self.aux_weight = [np.asarray([{} for i in range(0,ns)]) for ns in n_subclass]
+        self.avg_weight = [np.asarray([{} for i in range(0,ns)]) for ns in n_subclass]
 
-    
     def read_templates(self): 
 
         ff_name = self._feats_templates_file
@@ -369,3 +374,16 @@ class Model():
         model_instance.tag_codebook = Alphabet.from_dict(model_dict['tag_codebook'])
         return model_instance
         '''
+    def none_to_zero(self,n):
+        return  0 if n is None else n
+
+    def weight_at(self,w,action_ind, label_ind, feature_ind):
+        return self.none_to_zero(w[action_ind][label_ind].get(feature_ind))
+
+    def increase_weight_at(self,w,action_ind, label_ind, feature_ind,to_increase):
+        w[action_ind][label_ind].put(feature_ind, self.weight_at(w,action_ind,label_ind,feature_ind)+to_increase)
+        if self.approx_equal(self.weight_at(w,action_ind,label_ind,feature_ind),0.0):
+            w[action_ind][label_ind].remove(feature_ind)
+
+    def approx_equal(self, a, b):
+        return abs(a-b)< self.eps

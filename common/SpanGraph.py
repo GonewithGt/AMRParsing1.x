@@ -652,7 +652,7 @@ class SpanGraph(object):
                 import pdb
                 pdb.set_trace()
             ancestor_index = self.nodes[true_index].parents[0]
-            while not isinstance(ancestor_index,int):
+            while not isinstance(ancestor_index,int) and self.nodes[ancestor_index].num_parent_infer > 0:
                 true_index = ancestor_index
                 ancestor_index = self.nodes[true_index].parents[0]
         return true_index

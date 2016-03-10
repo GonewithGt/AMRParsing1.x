@@ -419,7 +419,7 @@ class Parser(object):
                             beam.get()
             beam = self.priority_queue_to_list(beam)
             if len(beam) == 0 or best_scored_state is None:
-                return
+                return False
 
             if (gold_features is not None) and (not best_scored_state.is_gold) and (not violated) :
                 self.perceptron.update_weight_one_step(gold_act['type'],gold_features,gold_label_index,best_scored_state.act['type'],best_scored_state.features,best_scored_state.label_ind)
@@ -436,24 +436,27 @@ class Parser(object):
 
             oracle_state = oracle_state.apply(act_to_apply)
             if not self.contains_gold(beam):
+              return False
+              #      for scored_state in old_beam:
+               #          state, is_gold = scored_state.el
+                #         if is_gold:
+                 #           gold_act_score = state.get_score(gold_act['type'], gold_features, True)[gold_label_index]
+                  #          beam.append(ScoredElement((oracle_state.pcopy(),True),scored_state.score+ gold_act_score))
+                   #         break
+        return True
 
-                    for scored_state in old_beam:
-                         state, is_gold = scored_state.el
-                         if is_gold:
-                            gold_act_score = state.get_score(gold_act['type'], gold_features, True)[gold_label_index]
-                            beam.append(ScoredElement((oracle_state.pcopy(),True),scored_state.score+ gold_act_score))
-                            break
 
     def parse_corpus_beam_train(self, instances, k):
         start_time = time.time()
         i =0
+        parsed = 0
         percent = int(len(instances)/100)
         for instance in instances:
-            self.train_beam(instance,k)
+            parsed+= 1 if self.train_beam(instance,k) else 0
             i = i + 1
             if i >= percent and i%(percent) ==0:
-                print >> self.elog,"Training on %s instances takes %s" % (str(i),datetime.timedelta(seconds=round(time.time()-start_time,0)))
-        print >> self.elog,"One pass on %s instances takes %s" % (str(len(instances)),datetime.timedelta(seconds=round(time.time()-start_time,0)))
+                print >> self.elog,"parsed %s of training on %s instances takes %s" % (str(parsed),str(i),datetime.timedelta(seconds=round(time.time()-start_time,0)))
+        print >> self.elog,"One pass on %s instances (parsed %s) takes %s" % (str(len(instances)), str(parsed),datetime.timedelta(seconds=round(time.time()-start_time,0)))
 
     def parse_beam_corpus_test(self, instances,k=10, skip = 0, Train = False):
         start_time = time.time()
