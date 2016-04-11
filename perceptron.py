@@ -4,15 +4,10 @@ import numpy as np
 from constants import WEIGHT_DTYPE
 
 class Perceptron():
-    
-    #model = None
-    #num_updates = 0
-    #wstep = 1
 
     def __init__(self,model):
         self.model = model
         self.num_updates = 0
-        #self.reshape_rate = reshape_rate 
 
     def get_num_updates(self):
         return self.num_updates
@@ -20,17 +15,6 @@ class Perceptron():
     def no_update(self):
         self.model.wstep += 1
 
-    def reshape_weight(self,act_idx,reshape_rate=10**5):        
-        w = self.model.weight[act_idx]
-        aw = self.model.aux_weight[act_idx]
-        avgw = self.model.avg_weight[act_idx]
-
-        #self.model.weight[act_idx] = np.vstack((w,np.zeros(shape=(reshape_rate,w.shape[1]),dtype=WEIGHT_DTYPE)))
-        #self.model.aux_weight[act_idx] = np.vstack((aw,np.zeros(shape=(reshape_rate,aw.shape[1]),dtype=WEIGHT_DTYPE)))
-        #self.model.avg_weight[act_idx] = np.vstack((avgw,np.zeros(shape=(reshape_rate,avgw.shape[1]),dtype=WEIGHT_DTYPE)))
-        self.model.weight[act_idx] = np.concatenate((w,np.asarray([{}])))
-        self.model.aux_weight[act_idx] = np.concatenate((w,np.asarray([{}])))
-        self.model.avg_weight[act_idx] = np.concatenate((w,np.asarray([{}])))
 
     def update_weight_one_step(self,act_g,feat_g,act_l_g,act_b,feat_b,act_l_b):
         self.num_updates += 1
@@ -39,13 +23,8 @@ class Perceptron():
         act_b_idx = self.model.class_codebook.get_index(act_b)
 
         act_l_g = act_l_g if act_l_g else 0
-        #act_t_g = act_t_g if act_t_g else 0
 
         act_l_b = act_l_b if act_l_b else 0
-        #act_t_b = act_t_b if act_t_b else 0
-        
-       ## if self.model.weight[act_g_idx].shape[0] <= self.model.feature_codebook[act_g_idx].size()+len(feat_g):
-       ##     self.reshape_weight(act_g_idx)
 
         g_feats_indices = map(self.model.feature_codebook[act_g_idx].get_default_index,feat_g)
         for g_feat_ind in g_feats_indices:
@@ -60,15 +39,39 @@ class Perceptron():
         self.model.wstep += 1
 
 
+    def part_update_weight(self,act,feat,label_index, delta):
+
+        self.num_updates += 1
+
+        act_index = self.model.class_codebook.get_index(act)
+
+        label_index = label_index if label_index else 0
+
+        feat_indices = map(self.model.feature_codebook[act_index].get_default_index,feat)
+        for feat_index in feat_indices:
+            self.model.increase_weight_at(self.model.weight,act_index,label_index, feat_index,delta)
+            self.model.increase_weight_at(self.model.aux_weight,act_index,label_index, feat_index,delta *float(self.model.wstep))
+
+    def next_step(self):
+        self.model.wstep += 1
+
+
+
 
     def average_weight(self):
-        for i in self.model.class_codebook.indexes():
-            weight = self.model.weight[i]
-            aux_weight = self.model.aux_weight[i]
-            avg_weight = self.model.avg_weight[i]
+        for act_ind in self.model.class_codebook.indexes():
+            weight = self.model.weight[act_ind]
+            aux_weight = self.model.aux_weight[act_ind]
+            avg_weight = self.model.avg_weight[act_ind]
             wstep = self.model.wstep 
-            
+
+            for label_ind in range(0,len(weight)):
+                for feat_ind in set(weight[label_ind].keys()).union(set(aux_weight[label_ind].keys())).union(set(avg_weight[label_ind].keys())):
+
+                    v = self.model.weight_at(self.model.weight, act_ind,label_ind,feat_ind)-self.model.weight_at(self.model.aux_weight, act_ind,label_ind,feat_ind)/float(wstep)
+                    self.model.update_weight(self.model.avg_weight,act_ind,label_ind,feat_ind,v)
+
             #np.divide(aux_weight,wstep+.0,aux_weight)
-            np.divide(aux_weight,wstep+.0,avg_weight)
-            np.subtract(weight,avg_weight,avg_weight)
+            #np.divide(aux_weight,wstep+.0,avg_weight)
+            #np.subtract(weight,avg_weight,avg_weight)
         

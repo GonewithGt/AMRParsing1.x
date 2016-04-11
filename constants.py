@@ -1,4 +1,5 @@
-# all the constants 
+# all the constants
+import argparse
 import numpy as np
 import re
 from os import listdir
@@ -64,7 +65,7 @@ MERGE = 7
 INFER = 8
 ADDCHILD = 9
 
-
+#here
 PRE_MERGE_NETAG = ['PERSON','LOCATION','ORGANIZATION','MISC','DATE']
 INFER_NETAG = set(['PERSON','LOCATION','ORGANIZATION','MISC'])
 FUNCTION_TAG = ['IN','DT','TO','RP']
@@ -160,6 +161,44 @@ FEATS_ABBR['txn'] = 'txn'
 FEATS_ABBR['txdelta'] = 'txdelta'
 
 DEFAULT_RULE_FILE = './rules/dep2amrLabelRules'
+
+
+def main(args):
+    _load_rules(DEFAULT_RULE_FILE)
+
+if __name__ == "__main__":
+    arg_parser = argparse.ArgumentParser(description='hello')
+    args = arg_parser.parse_args()
+    rule_file = DEFAULT_RULE_FILE
+    rf = open(rule_file,'r')
+    d = {}
+    for line in rf.readlines():
+        if line.strip():
+            dep_rel,amr_rel,_ = line.split()
+            if dep_rel not in d:
+                d[dep_rel] = amr_rel[1:]
+        else:
+            pass
+    print d
+
+    nomdict = open('./resources/nombank-dict.1.0','r')
+    nomlist = []
+    token_re = re.compile('^\\(PBNOUN :ORTH \\"([^\s]+)\\" :ROLE-SETS')
+    for line in nomdict.readlines():
+        m = token_re.match(line.rstrip())
+        if m:
+            nomlist.append(m.group(1))
+    print nomlist
+
+    cluster_dict = defaultdict(str)
+    for fn in listdir('./resources/wclusters-engiga'):
+        if re.match('^.*c(\d+).*$',fn).group(1) == str(1000) and fn.endswith('.txt'):
+            with open('./resources/wclusters-engiga'+'/'+fn,'r') as f:
+                for line in f:
+                    bitstring, tok, freq = line.split()
+                    cluster_dict[tok]=bitstring
+
+    print cluster_dict
 
 def _load_rules(rule_file):
     rf = open(rule_file,'r')

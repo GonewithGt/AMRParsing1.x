@@ -57,10 +57,13 @@ class Data():
         
     def addDependency( self, rel, l_index, r_index):
         '''CoNLL dependency format'''
-        assert int(r_index) == self.tokens[int(r_index)]['id'] and int(l_index) == self.tokens[int(l_index)]['id']
-        self.tokens[int(r_index)]['head'] = int(l_index)
-        self.tokens[int(r_index)]['rel'] = rel
-        
+        try:
+            assert int(r_index) == self.tokens[int(r_index)]['id'] and int(l_index) == self.tokens[int(l_index)]['id']
+            self.tokens[int(r_index)]['head'] = int(l_index)
+            self.tokens[int(r_index)]['rel'] = rel
+        except ValueError:
+            print rel
+
     def addProp(self, prd, frmset, arg, label):
         self.tokens[prd]['frmset'] = frmset
         if 'args' in self.tokens[prd]:

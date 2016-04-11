@@ -759,8 +759,15 @@ class GraphState(object):
 
         return confusion_matrix
     '''
-        
-    def get_score(self,act_type,feature,train=True): 
+
+    def get_score_new(self, act_ind, label_ind, feature, train = True):
+        weight = GraphState.model.weight if train else GraphState.model.avg_weight
+        score = 0.0
+        for feat in feature:
+            score+= GraphState.model.weight_at(weight, act_ind, label_ind,GraphState.model.feature_codebook[act_ind].get_index(feat))
+        return score
+
+    def get_score(self,act_type,feature,train=True):
         act_idx = GraphState.model.class_codebook.get_index(act_type)       
         #if GraphState.model.weight[act_idx].shape[0] <= GraphState.model.feature_codebook[act_idx].size():
         #    GraphState.model.reshape_weight(act_idx)        

@@ -649,8 +649,9 @@ class SpanGraph(object):
         # if current node has done inferred; find the true head of abstract struture
         if self.nodes[index].num_parent_infer > 0:
             if not self.nodes[true_index].parents:
-                import pdb
-                pdb.set_trace()
+                #import pdb
+                #pdb.set_trace()
+                return true_index
             ancestor_index = self.nodes[true_index].parents[0]
             while not isinstance(ancestor_index,int) and self.nodes[ancestor_index].num_parent_infer > 0:
                 true_index = ancestor_index
