@@ -381,7 +381,7 @@ def main():
         parser = Parser(model=model,oracle_type=DET_T2G_ORACLE_ABT,action_type=args.actionset,verbose=args.verbose,elog=experiment_log)
         if(start_it==0):
             model.setup(action_type=args.actionset,instances=train_instances,parser=parser,feature_templates_file=feat_template)
-
+        train_instances = train_instances
         print >> experiment_log, "BEGIN TRAINING!"
         for iter in xrange(1+start_it,args.iterations+1):
             print >> experiment_log, "shuffling training instances"
