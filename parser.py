@@ -143,7 +143,7 @@ class Parser(object):
             else:
 
                 for label_ind in range(0, len(self.model.weight[act_ind])):
-                    score = state_score + (state.get_score_new(act_ind, label_ind, feat, train) if bool(self.model.weight[act_ind][label_ind]) else 0 )
+                    score = state_score + state.get_score_new(act_ind, label_ind, feat, train)
                     if (beam.qsize() == k and score <= beam.queue[0].score):
                         continue
 
@@ -298,13 +298,15 @@ class Parser(object):
 
         try:
             gold_act_ind = gold_actions.index(gold_act)
-            gold_act_ind = self.model.class_codebook.get_index(gold_act['type'])
         except ValueError:
             if gold_act['type'] != NEXT2:
                 violated = True  # violated the constraint
-            gold_actions.append(gold_act)
-            gold_act_ind = len(gold_actions) - 1
+            print "action " + str(gold_act) + " seems to be illegal for " + str(ref_graph)
 
+            #gold_actions.append(gold_act)
+            #gold_act_ind = len(gold_actions) - 1
+
+        gold_act_ind = self.model.class_codebook.get_index(gold_act['type'])
         gold_label_index = Parser.get_label_index(gold_act, gold_label)
 
         score = 0
@@ -335,7 +337,6 @@ class Parser(object):
                 (gold_act_ind, gold_label_index, gold_act, gold_label, prev_state,None, violated, True), None)), score)
             beam = [ScoredElement(((oracle_state.pcopy(), True), StackNode(
                 (gold_act_ind, gold_label_index, gold_act, gold_label, prev_state,None, violated, True), None)), score)]
-            max_conf = beam[0]
 
         while not self.need_to_terminate(beam):
             gold_act_ind = gold_label  = None
@@ -388,18 +389,19 @@ class Parser(object):
                 max_conf = final_el
                 max_dif = final_el.score-oracle_conf.score
 
-
+        if max_conf is None:
+            max_conf = oracle_conf
         _, gold_stack_node = oracle_conf.el
         _, max_viol_stack_node = max_conf.el
         gold_sequence = gold_stack_node.to_list()
+        max_viol_sequence = max_viol_stack_node.to_list()
 
         if max_viol_stack_node.element[7]:
             for i in range(0, len(gold_sequence)):
                 self.perceptron.no_update()
-            print "No update!"
+            print "No update! "+ str(len(max_viol_sequence))+" of "+str(len(gold_sequence))
             return True
 
-        max_viol_sequence = max_viol_stack_node.to_list()
         matched = 0
         for el in max_viol_sequence:
             _, _, _, _, _,_,_, is_gold = el

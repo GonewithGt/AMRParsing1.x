@@ -371,9 +371,9 @@ class GraphState(object):
             actions.append({'type':NEXT2})
             actions.extend({'type':NEXT2,'tag':z} for z in all_candidate_tags)
 
-        if   currentIdx != 0:
+        if currentIdx != 0:
             actions.append({'type':DELETENODE})
-
+            actions.append({'type':NEXT2, 'tag':currentNode.tag})
         return actions
 
 
@@ -869,6 +869,7 @@ class GraphState(object):
 
     def get_score_new(self, act_ind, label_ind, feature, train = True):
         weight = GraphState.model.weight if train else GraphState.model.avg_weight
+        if  not bool(weight[act_ind][label_ind]): return 0.0
         score = 0.0
         for feat in feature:
             score+= GraphState.model.weight_at(weight, act_ind, label_ind,GraphState.model.feature_codebook[act_ind].get_index(feat))
