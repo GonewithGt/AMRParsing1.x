@@ -81,6 +81,7 @@ class Model():
     def _set_rel_tag_codebooks(self,instances,parser):
         #TODO
         self.rel_codebook.add(NULL_EDGE)
+        self.rel_codebook.add(None)
         self.rel_codebook.add(START_EDGE)
         #self.tag_codebook['Concept'].add(NULL_TAG)
         failed  = set()

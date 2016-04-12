@@ -385,7 +385,7 @@ def main():
         print >> experiment_log, "BEGIN TRAINING!"
         for iter in xrange(1+start_it,args.iterations+1):
             print >> experiment_log, "shuffling training instances"
-            random.shuffle(train_instances)
+       #     random.shuffle(train_instances)
 
             print >> experiment_log, "Iteration:",iter
             begin_updates = parser.perceptron.get_num_updates()

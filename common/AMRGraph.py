@@ -83,7 +83,7 @@ class AMR(defaultdict):
 
         def rename_node(parentnodelabel,parentconcept):
             if not isinstance(parentnodelabel,(Quantity,Polarity,Interrogative,StrLiteral)):                                       
-                # graph node rebuild
+                # graph node rebuil1d
                 if parentconcept is not None:
                     amr.node_to_concepts[node_idx] = parentconcept
                     mapping_table[parentnodelabel] = node_idx

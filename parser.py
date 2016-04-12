@@ -109,17 +109,30 @@ class Parser(object):
     def k_best_new(self,state, actions, features, k, train = True):
         beam = Queue.PriorityQueue()
         for i, (act, feat) in enumerate(zip(actions,features),0):
+
             act_ind  = self.model.class_codebook.get_index(act['type'])
-            for label_ind in range(0, len(self.model.weight[act_ind])):
-                score = state.get_score_new(act_ind, label_ind, feat,train)
+
+            if (not act['type'] in ACTION_WITH_EDGE) and (not  act['type'] in ACTION_WITH_TAG):
+                score = state.get_score_new(act_ind, 0, feat,train)
                 if(beam.qsize()==k and score <= beam.queue[0].score):
                     continue
-                if act['type'] in ACTION_WITH_EDGE or act['type'] in ACTION_WITH_TAG:
-                    beam.put(ScoredElement((i,act_ind,label_ind),score))
-                else:
-                    beam.put(ScoredElement((i,act_ind,0),score))
+                beam.put(ScoredElement((i,act_ind, 0),score))
                 if beam.qsize() > k:
                         beam.get()
+            else:
+
+                for label_ind in range(0, len(self.model.weight[act_ind])):
+                    score = state.get_score_new(act_ind, label_ind, feat,train)
+                    if(beam.qsize()==k and score <= beam.queue[0].score):
+                        continue
+                    #if act['type'] in ACTION_WITH_EDGE or act['type'] in ACTION_WITH_TAG:
+                    if label_ind==1 and (not act['type'] == NEXT1):
+                        continue
+                    beam.put(ScoredElement((i,act_ind,label_ind),score))
+                    #else:
+                    #    beam.put(ScoredElement((i,act_ind,0),score))
+                    if beam.qsize() > k:
+                            beam.get()
 
         return self.priority_queue_to_list(beam)
 
@@ -163,7 +176,8 @@ class Parser(object):
             index = Parser.State.model.tag_codebook['ABTTag'].get_index(label)
         else:
             index = 0
-
+        if label is None and act['type']== 0:
+            index = 1
         return index
 
     @staticmethod
@@ -174,7 +188,8 @@ class Parser(object):
             label = Parser.State.model.tag_codebook['ABTTag'].get_label(index)
         else:
             label = None
-
+        #if(label == NULL_EDGE and (act['type'] == NEXT1) ):
+        #   label = None
         return label
 
     def parse_corpus_train(self, instances, output_percent = 10):
@@ -226,8 +241,9 @@ class Parser(object):
         violated = False
         gold_act, gold_label = Parser.oracle.give_ref_action(oracle_state,ref_graph)
         gold_actions = oracle_state.get_possible_actions(True)
+
         try:
-            #gold_act_ind = gold_actions.index(gold_act)
+            gold_act_ind = gold_actions.index(gold_act)
             gold_act_ind = self.model.class_codebook.get_index(gold_act['type'])
         except ValueError:
             if gold_act['type'] != NEXT2:
@@ -290,13 +306,14 @@ class Parser(object):
                     label = Parser.get_index_label(act,label_ind)
                     is_current_gold = False
 
-                    if   is_gold and act_ind ==gold_act_ind and (label == gold_label or gold_label_index==label_ind):
+                    if   is_gold and act_ind ==gold_act_ind and (label == gold_label):
                         is_current_gold = True
                     if act['type'] in ACTION_WITH_EDGE:
                         act['edge_label'] = label
                     elif act['type'] in ACTION_WITH_TAG:
                         act['tag'] = label
-
+                    if is_gold and (not is_current_gold) and gold_act_ind==act_ind and label_ind==gold_label_index:
+                        print 'type = '+ str(act['type']) +', gl = '+ ('None' if gold_label is None else gold_label)+', label = '+('None' if label is None else label)
                     new_state = state.pcopy().apply(act)
                     new_state_is_gold = is_current_gold
                     new_state_stack_node = StackNode((act_ind,label_ind,act,label, False, new_state_is_gold), stack_node)
@@ -328,31 +345,45 @@ class Parser(object):
             else:
                 matched += 1
 
-        last_matched_state = Parser.State.init_state(instance,self.verbose)
+        gold_state  = Parser.State.init_state(instance,self.verbose)
+        max_viol_state  = Parser.State.init_state(instance,self.verbose)
 
         for el in gold_sequence[0:matched]:
             _,_,act,_, _,_ =el
-            last_matched_state = last_matched_state.apply(act)
+            gold_state = gold_state.apply(act)
 
-        gold_state  = last_matched_state
-        max_viol_state  = last_matched_state.pcopy()
+        for el in max_viol_sequence[0:matched]:
+            _,_,act,_, _,_ =el
+            max_viol_state = max_viol_state.apply(act)
 
-        for el in gold_sequence[matched:]:
+        was_violated = False
+        violated_indexes = []
+        for i,el in enumerate(gold_sequence[matched:]):
             _,label_ind,act,_, violated,_ = el
             if not violated:
                 feat = gold_state.make_feat(act)
                 self.perceptron.part_update_weight(act['type'],feat, label_ind,1.0)
+            else:
+                violated_indexes.append(i)
+                if not was_violated:
+                       print "action "+ str(act['type'])+" seems to be illegal for " + str(ref_graph)
+                was_violated = True
             gold_state = gold_state.apply(act)
+        if  (not len(gold_state.action_history)== len(oracle_conf.el[0][0].action_history)) or ( (not gold_state.is_terminal()) == oracle_conf.el[0][0].is_terminal() ):
+            print "shit 1"
 
-        if not gold_state.is_final():
-            print 'Gold state is not final!'
-        for el in max_viol_sequence[matched:]:
+        for i,el in enumerate(max_viol_sequence[matched:]):
             _,label_ind,act,_, _,_ = el
             feat = max_viol_state.make_feat(act)
-            if not (act['type'] in [a['type'] for a in max_viol_state.get_possible_actions(True)]):
+            if max_viol_state.is_terminal() or not (act['type'] in [a['type'] for a in max_viol_state.get_possible_actions(True)]):
                 print 'Wrong transition!'
-            self.perceptron.part_update_weight(act['type'],feat, label_ind,-1.0)
+            if len (violated_indexes) >0  and violated_indexes[0]==i:
+                violated_indexes.pop()
+            else:
+                self.perceptron.part_update_weight(act['type'],feat, label_ind,-1.0)
             max_viol_state = max_viol_state.apply(act)
+        if  (not len(max_viol_state.action_history)== len(max_conf.el[0][0].action_history)) or ( (not max_viol_state.is_terminal()) == max_conf.el[0][0].is_terminal() ):
+            print "shit 2"
 
         self.perceptron.next_step()
         return len(gold_sequence)==len(max_viol_sequence) and len(gold_sequence)==matched
