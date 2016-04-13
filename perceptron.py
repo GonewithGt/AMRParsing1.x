@@ -41,7 +41,6 @@ class Perceptron():
 
     def part_update_weight(self,act,feat,label_index, delta):
 
-        self.num_updates += 1
 
         act_index = self.model.class_codebook.get_index(act)
 
@@ -53,6 +52,8 @@ class Perceptron():
             self.model.increase_weight_at(self.model.aux_weight,act_index,label_index, feat_index,delta *float(self.model.wstep))
 
     def next_step(self):
+
+        self.num_updates += 1
         self.model.wstep += 1
 
 

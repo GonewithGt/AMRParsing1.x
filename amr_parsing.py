@@ -393,6 +393,7 @@ def main():
             parser.perceptron.average_weight()
             #model.save_model(args.model+'-iter'+str(iter)+'-'+str(int(time.time()))+'.m')
             model.save_model(args.model+'-beam-iter'+str(iter)+'k-'+str(args.k)+'.m')
+            parser.perceptron.average_weight()
             if args.dev:
                 print >> experiment_log ,"Result on develop set:"
                 parsed_amr = parser.parse_beam_corpus_test(dev_instances,args.k)

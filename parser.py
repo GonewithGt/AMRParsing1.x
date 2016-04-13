@@ -290,18 +290,24 @@ class Parser(object):
                 return False
         return True
 
+    def need_to_terminate_with_gold(self, beam):
+        if len(beam) == 0:
+            return True
+        for scored_el in beam:
+            (state, is_gold), _ = scored_el.el
+            if not state.is_terminal() and is_gold:
+                return False
+        return True
+
+
     def apply_oracle_acton(self, oracle_state, ref_graph, apply_features=True):
 
         violated = False
         gold_act, gold_label = Parser.oracle.give_ref_action(oracle_state, ref_graph)
-        gold_actions = oracle_state.get_possible_actions_weak(True)
-
         try:
-            gold_act_ind = gold_actions.index(gold_act)
+            gold_act_ind = oracle_state.get_possible_actions_strong().index(gold_act)
         except ValueError:
-            if gold_act['type'] != NEXT2:
                 violated = True  # violated the constraint
-            print "action " + str(gold_act) + " seems to be illegal for " + str(ref_graph)
 
             #gold_actions.append(gold_act)
             #gold_act_ind = len(gold_actions) - 1
@@ -322,7 +328,101 @@ class Parser(object):
 
         return oracle_state.apply(gold_act), gold_act_ind, gold_label_index, gold_act, gold_label,features, violated, score
 
-    def train_beam_max_violation_v2(self, instance, k=10, weak=True):
+
+    def train_beam_early_update_st(self, instance, k=10):
+        ref_graph = instance.gold_graph
+        oracle_conf = None
+        beam = []
+        updates =[]
+
+        if True:
+            prev_state = Parser.State.init_state(instance, self.verbose)
+            oracle_state, gold_act_ind, gold_label_index, gold_act, gold_label,_, violated, score = self.apply_oracle_acton(
+                prev_state.pcopy(), ref_graph, False)
+            oracle_conf = ScoredElement(((oracle_state, True), StackNode(
+                (gold_act_ind, gold_label_index, gold_act, gold_label, prev_state,None, violated, True), None)), score)
+            beam = [ScoredElement(((oracle_state.pcopy(), True), StackNode(
+                (gold_act_ind, gold_label_index, gold_act, gold_label, prev_state,None, violated, True), None)), score)]
+
+        while not self.need_to_terminate(beam):
+            gold_act_ind = gold_label  = None
+            violated = False
+            if not oracle_conf.el[0][0].is_terminal():
+                prev_score = oracle_conf.score
+                oracle_state, gold_act_ind, gold_label_index, gold_act, gold_label,gold_feat, violated, score = self.apply_oracle_acton(
+                    oracle_conf.el[0][0], ref_graph)
+                oracle_conf = ScoredElement(((oracle_state, True), StackNode(
+                    (gold_act_ind, gold_label_index, gold_act, gold_label, oracle_conf.el[0][0],gold_feat, violated, True),
+                    oracle_conf.el[1])), prev_score + score)
+
+            old_beam = beam
+            beam = []
+            if violated:
+                beam.append(oracle_conf)
+            max_confs = [oracle_conf]
+
+            for scored_state in self.k_best_for_states(old_beam, k, False, True):
+
+                ((state, is_gold), stack_node), act, label_ind, feat = scored_state.el
+
+                if state.is_terminal():
+                    new_scored_state = ScoredElement(((state, is_gold), stack_node), scored_state.score)
+                    if (scored_state.score > max_confs[0].score):
+                        max_confs = [new_scored_state]
+                    elif scored_state.score == max_confs[0].score:
+                        max_confs.append(new_scored_state)
+
+                else:
+
+                    label = Parser.get_index_label(act, label_ind)
+                    if act['type'] in ACTION_WITH_EDGE:
+                        act['edge_label'] = label
+                    elif act['type'] in ACTION_WITH_TAG:
+                        act['tag'] = label
+
+                    act_ind = self.model.class_codebook.get_index(act['type'])
+
+                    is_current_gold = (is_gold and act_ind == gold_act_ind and label == gold_label)
+
+                    new_state = state.pcopy().apply(act)
+                    new_state_is_gold = is_current_gold
+                    new_state_stack_node = StackNode((act_ind, label_ind, act, label, state,feat, False, new_state_is_gold),
+                                                     stack_node)
+                    new_scored_state = ScoredElement(((new_state, new_state_is_gold), new_state_stack_node),
+                                                     scored_state.score)
+
+                    if (scored_state.score > max_confs[0].score):
+                        max_confs = [new_scored_state]
+                    elif scored_state.score == max_confs[0].score:
+                        max_confs.append(new_scored_state)
+                    beam.append(new_scored_state)
+
+            max_conf = None
+            for poss_max_conf in max_confs:
+                if not poss_max_conf.el[0][1]:
+                    max_conf = poss_max_conf
+                    break
+            if max_conf is None:
+                updates.append((None,None))
+            elif not violated:
+                osn = oracle_conf.el[1]
+                msn = max_conf.el[1]
+                updates.append(((osn[4],osn[2],osn[1],osn[5]),(msn[4],msn[2],msn[1],msn[5])))
+
+        if len(updates)==0:
+            return True
+        for gold_el, max_viol_el in updates:
+            if gold_el:
+                gold_state,g_act, g_label_ind,g_feat = gold_el
+                state,act, label_ind, feat = max_viol_el
+                self.perceptron.update_weight_one_step(g_act['type'], g_feat, g_label_ind, act['type'], feat, label_ind)
+            else:
+                self.perceptron.no_update()
+        return False
+
+
+
+    def train_beam_max_violation_v2(self, instance, k=10):
         ref_graph = instance.gold_graph
         oracle_conf = None
         max_conf = None
@@ -340,6 +440,7 @@ class Parser(object):
 
         while not self.need_to_terminate(beam):
             gold_act_ind = gold_label  = None
+            violated = False
             if not oracle_conf.el[0][0].is_terminal():
                 prev_score = oracle_conf.score
                 oracle_state, gold_act_ind, gold_label_index, gold_act, gold_label,gold_feat, violated, score = self.apply_oracle_acton(
@@ -350,16 +451,22 @@ class Parser(object):
 
             old_beam = beam
             beam = []
-            for scored_state in self.k_best_for_states(old_beam, k, weak, True):
+            if violated:
+                beam.append(oracle_conf)
+            #added_fake = False
+            for scored_state in self.k_best_for_states(old_beam, k, False, True):
 
                 ((state, is_gold), stack_node), act, label_ind, feat = scored_state.el
+             #   if violated and not added_fake:
+             #       beam.append(ScoredElement(((oracle_state.pcopy(), True), oracle_conf.el[1]),oracle_conf.score))
+             #       added_fake = True
 
                 if state.is_terminal():
                     new_scored_state = ScoredElement(((state, is_gold), stack_node), scored_state.score)
                     if (not is_gold) and ((scored_state.score-oracle_conf.score) > max_dif):
                         max_conf = new_scored_state
                         max_dif = scored_state.score-oracle_conf.score
-                    beam.append(new_scored_state)
+                    #beam.append(new_scored_state)
                 else:
 
                     label = Parser.get_index_label(act, label_ind)
@@ -399,7 +506,7 @@ class Parser(object):
         if max_viol_stack_node.element[7]:
             for i in range(0, len(gold_sequence)):
                 self.perceptron.no_update()
-            print "No update! "+ str(len(max_viol_sequence))+" of "+str(len(gold_sequence))
+        #    print "No update! "+ str(len(max_viol_sequence))+" of "+str(len(gold_sequence))
             return True
 
         matched = 0
@@ -411,166 +518,29 @@ class Parser(object):
                 matched += 1
                 self.perceptron.no_update()
 
-        print "Matched " + str(matched) + " of " + str(len(gold_sequence))
+        #print "Matched " + str(matched) + " of " + str(len(gold_sequence))
 
         for gold_el, max_viol_el in itertools.izip_longest(gold_sequence[matched:], max_viol_sequence[matched:]):
-            if gold_el:
-                _, label_ind, act, _, gold_state,feat, violated, _ = gold_el
-                if not violated:
-                    self.perceptron.part_update_weight(act['type'], feat, label_ind, 1.0)
-            if max_viol_el:
+            if gold_el and max_viol_el:
+                _, g_label_ind, g_act, _, gold_state,g_feat, violated, _ = gold_el
                 _, label_ind, act, _, max_viol_state,feat, _, _ = max_viol_el
-                self.perceptron.part_update_weight(act['type'], feat, label_ind, -1.0)
-            self.perceptron.next_step()
+                if not violated:
+                    self.perceptron.update_weight_one_step(g_act['type'], g_feat, g_label_ind, act['type'], feat, label_ind)
+            else:
+
+                if gold_el:
+                    _, g_label_ind, g_act, _, gold_state,g_feat, violated, _ = gold_el
+                    if not violated:
+                        self.perceptron.part_update_weight(g_act['type'], g_feat, g_label_ind, 1.0)
+                        self.perceptron.next_step()
+
+                if max_viol_el:
+                    _, label_ind, act, _, max_viol_state,feat, _, _ = max_viol_el
+                    self.perceptron.part_update_weight(act['type'], feat, label_ind, -1.0)
+                    self.perceptron.next_step()
 
         return False
 
-    def train_beam_max_violation(self, instance, k=10):
-        ref_graph = instance.gold_graph
-        oracle_conf = None
-        max_conf = None
-        beam = []
-        max_dif = -1
-
-        if True:
-            oracle_state, gold_act_ind, gold_label_index, gold_act, gold_label, violated, score = self.apply_oracle_acton(
-                Parser.State.init_state(instance, self.verbose), ref_graph, False)
-            oracle_conf = ScoredElement(((oracle_state, True), StackNode(
-                (gold_act_ind, gold_label_index, gold_act, gold_label, violated, True), None)), score)
-            beam = [ScoredElement(((oracle_state.pcopy(), True),
-                                   StackNode((gold_act_ind, gold_label_index, gold_act, gold_label, violated, True),
-                                             None)), score)]
-            max_conf = beam[0]
-
-        while not self.need_to_terminate(beam):
-            gold_act_ind = gold_act = gold_label = gold_label_index = None
-            if not oracle_conf.el[0][0].is_terminal():
-                prev_score = oracle_conf.score
-                oracle_state, gold_act_ind, gold_label_index, gold_act, gold_label, violated, score = self.apply_oracle_acton(
-                    oracle_conf.el[0][0], ref_graph, False)
-                oracle_conf = ScoredElement(((oracle_state, True), StackNode(
-                    (gold_act_ind, gold_label_index, gold_act, gold_label, violated, True), oracle_conf.el[1])),
-                                            prev_score + score)
-
-            old_beam = beam
-            beam = Queue.PriorityQueue()
-            for scored_state in old_beam:
-                (state, is_gold), stack_node = scored_state.el
-
-                if state.is_terminal():
-                    beam.put(scored_state)
-                    if beam.qsize() > k:
-                        beam.get()
-                    continue
-
-                actions = state.get_possible_actions_weak(True)
-
-                features = map(state.make_feat, actions)
-
-                for scored_el in self.k_best_new(state, actions, features, k):
-                    (local_act_ind, act_ind, label_ind) = scored_el.el
-                    act = actions[local_act_ind]
-                    label = Parser.get_index_label(act, label_ind)
-                    is_current_gold = False
-
-                    if is_gold and act_ind == gold_act_ind and (label == gold_label):
-                        is_current_gold = True
-                    if act['type'] in ACTION_WITH_EDGE:
-                        act['edge_label'] = label
-                    elif act['type'] in ACTION_WITH_TAG:
-                        act['tag'] = label
-                    if is_gold and (not is_current_gold) and gold_act_ind == act_ind and label_ind == gold_label_index:
-                        print 'type = ' + str(act['type']) + ', gl = ' + (
-                        'None' if gold_label is None else gold_label) + ', label = ' + (
-                              'None' if label is None else label)
-                    # new_state = state.pcopy().apply(act)
-                    new_state_is_gold = is_current_gold
-                    new_state_stack_node = StackNode((act_ind, label_ind, act, label, False, new_state_is_gold),
-                                                     stack_node)
-                    new_scored_state = ScoredElement(((state, new_state_is_gold), new_state_stack_node),
-                                                     scored_state.score + scored_el.score)
-
-                    beam.put(new_scored_state)
-
-                    if beam.qsize() > k:
-                        beam.get()
-
-            beam = self.priority_queue_to_list(beam)
-            old_beam = beam
-            beam = []
-            for b_el in old_beam:
-                (state, is_gold), stack_node = b_el.el
-                if not state.is_terminal():
-                    new_state = state.pcopy().apply(stack_node.element[2])
-                    new_scored_el = ScoredElement(((new_state, is_gold), stack_node), b_el.score)
-                    beam.append(new_scored_el)
-                else:
-                    beam.append(b_el)
-            beam_len = len(beam)
-            if beam_len > 0:
-                highest_scored_conf = beam[beam_len - 1]
-                (state, is_gold), _ = highest_scored_conf.el
-                if (not is_gold) and ((highest_scored_conf.score - oracle_conf.score) > max_dif):
-                    max_conf = highest_scored_conf
-                    max_dif = highest_scored_conf.score - oracle_conf.score
-
-        _, gold_stack_node = oracle_conf.el
-        gold_sequence = gold_stack_node.to_list()
-        _, max_viol_stack_node = max_conf.el
-        max_viol_sequence = max_viol_stack_node.to_list()
-        matched = 0
-        for el in max_viol_sequence:
-            _, _, _, _, _, is_gold = el
-            if not is_gold:
-                break
-            else:
-                matched += 1
-
-        gold_state = Parser.State.init_state(instance, self.verbose)
-        max_viol_state = Parser.State.init_state(instance, self.verbose)
-
-        for el in gold_sequence[0:matched]:
-            _, _, act, _, _, _ = el
-            gold_state = gold_state.apply(act)
-
-        for el in max_viol_sequence[0:matched]:
-            _, _, act, _, _, _ = el
-            max_viol_state = max_viol_state.apply(act)
-
-        was_violated = False
-        violated_indexes = []
-        for i, el in enumerate(gold_sequence[matched:]):
-            _, label_ind, act, _, violated, _ = el
-            if not violated:
-                feat = gold_state.make_feat(act)
-                self.perceptron.part_update_weight(act['type'], feat, label_ind, 1.0)
-            else:
-                violated_indexes.append(i)
-                if not was_violated:
-                    print "action " + str(act['type']) + " seems to be illegal for " + str(ref_graph)
-                was_violated = True
-            gold_state = gold_state.apply(act)
-        if (not len(gold_state.action_history) == len(oracle_conf.el[0][0].action_history)) or (
-            (not gold_state.is_terminal()) == oracle_conf.el[0][0].is_terminal()):
-            print "shit 1"
-
-        for i, el in enumerate(max_viol_sequence[matched:]):
-            _, label_ind, act, _, _, _ = el
-            feat = max_viol_state.make_feat(act)
-            if max_viol_state.is_terminal() or not (
-                act['type'] in [a['type'] for a in max_viol_state.get_possible_actions_weak(True)]):
-                print 'Wrong transition!'
-            if len(violated_indexes) > 0 and violated_indexes[0] == i:
-                violated_indexes.pop()
-            else:
-                self.perceptron.part_update_weight(act['type'], feat, label_ind, -1.0)
-            max_viol_state = max_viol_state.apply(act)
-        if (not len(max_viol_state.action_history) == len(max_conf.el[0][0].action_history)) or (
-            (not max_viol_state.is_terminal()) == max_conf.el[0][0].is_terminal()):
-            print "shit 2"
-
-        self.perceptron.next_step()
-        return len(gold_sequence) == len(max_viol_sequence) and len(gold_sequence) == matched
 
     def train_beam_multiple_oracles(self, instance, k=10, oracles={DetOracleABT(), DetOracleSC(), DetOracle()}):
 
@@ -910,7 +880,7 @@ class Parser(object):
         parsed = 0
         output_shift = len(instances) if len(instances) <100 else int(len(instances) / 100) * output_percent
         for instance in instances:
-            parsed += 1 if self.train_beam_max_violation_v2(instance, k) else 0
+            parsed += 1 if self.train_beam_early_update_st(instance, k) else 0
             i = i + 1
             if i >= output_shift and i % (output_shift) == 0:
                 print >> self.elog, "Training on %s instances (parsed %s) takes %s" % (
@@ -963,9 +933,9 @@ class Parser(object):
             result.append(queue.get())
         return result
 
-    def parse_beam(self, instance, k=10, Train=False, weak=True):
+    def parse_beam(self, instance, k=10, Train=False):
         init_state =Parser.State.init_state(instance, self.verbose)
-        init_actions = init_state.get_possible_actions_weak(False)
+        init_actions = init_state.get_possible_actions_strong()
         if len(init_actions)>1:
             raise AssertionError("Init action must be unique")
         beam = [ScoredElement(((init_state.apply(init_actions[0]),None),None), 0)]
@@ -976,11 +946,10 @@ class Parser(object):
             old_beam = beam
             beam = []
 
-            for scored_state in self.k_best_for_states(old_beam, k, weak, True):
+            for scored_state in self.k_best_for_states(old_beam, k, True):
                 ((state, _), _), act, label_ind, feat = scored_state.el
 
                 if state.is_terminal():
-                    beam.append(ScoredElement(((state, None), None), scored_state.score))
                     if best_parse is None or best_parse.score < scored_state.score:
                         best_parse = ScoredElement(state, scored_state.score)
                 else:

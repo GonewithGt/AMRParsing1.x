@@ -272,9 +272,9 @@ class GraphState(object):
 
 
     def get_possible_actions_new(self, weak = True):
-        return self.get_possible_actions_weak(False) if weak else self.get_possible_actions(False)
+        return self.get_possible_actions_weak() if weak else self.get_possible_actions_strong()
 
-    def get_possible_actions_weak(self,train):
+    def get_possible_actions_weak(self):
 
         if self.idx == START_ID:
             return [{'type':NEXT2}]
@@ -375,6 +375,110 @@ class GraphState(object):
             actions.append({'type':DELETENODE})
             actions.append({'type':NEXT2, 'tag':currentNode.tag})
         return actions
+
+    def get_possible_actions_strong(self):
+
+        if self.idx == START_ID:
+            return [{'type':NEXT2}]
+
+        actions = []
+        currentIdx = self.idx
+        currentChildIdx = self.cidx
+        currentNode = self.get_current_node()
+        currentChild = self.get_current_child()
+        currentGraph = self.A
+        token_label_set = GraphState.model.token_label_set
+        token_to_concept_table = GraphState.model.token_to_concept_table
+        tag_codebook = GraphState.model.tag_codebook
+
+        if isinstance(currentIdx,int):
+            current_tok_lemma = ','.join(tok['lemma'] for tok in GraphState.sent if tok['id'] in range(currentNode.start,currentNode.end))
+            current_tok_form = ','.join(tok['form'] for tok in GraphState.sent if tok['id'] in range(currentNode.start,currentNode.end))
+            current_tok_ne = GraphState.sent[currentIdx]['ne']
+        else:
+            current_tok_form = ABT_TOKEN['form']
+            current_tok_lemma = ABT_TOKEN['lemma'] #if currentIdx != START_ID else START_TOKEN['lemma']
+            current_tok_ne = ABT_TOKEN['ne'] #if currentIdx != START_ID else START_TOKEN['ne']
+
+        #if self.action_history and self.action_history[-1]['type'] in [REPLACEHEAD,NEXT2,DELETENODE] and currentNode.num_parent_infer_in_chain < 3 and currentNode.num_parent_infer == 0:
+            #actions.extend([{'type':INFER,'tag':z} for z in tag_codebook['ABTTag'].labels()])
+
+        if currentChildIdx: # beta not empty
+            #all_candidate_edge_labels = GraphState.model.rel_codebook.labels()
+
+            #if current_tok_lemma in token_label_set:
+            #    all_candidate_edge_labels.extend(list(token_label_set[current_tok_lemma]))
+            #elif current_tok_ne not in ['O','NUMBER']:
+            #    all_candidate_edge_labels.extend(list(token_label_set[current_tok_ne]))
+                #all_candidate_tags.extend(GraphState.model.tag_codebook['ETag'].labels())
+            #else:
+            #    all_candidate_tags.append(current_tok_lemma)  # for decoding
+
+            if currentChildIdx == START_ID:
+                if currentNode.num_parent_infer_in_chain < 3 and currentNode.num_parent_infer == 0:
+                    actions = [{'type':NEXT1},{'type':INFER}]
+                else:
+                    actions = [{'type':NEXT1}]
+                return actions
+
+            if currentIdx != 0: # not root
+                if not currentChild.SWAPPED:
+                    #actions.extend([{'type':MERGE},{'type':REPLACEHEAD}])
+                    ##actions.extend([{'type':NEXT1,'edge_label':y} for y in all_candidate_edge_labels])
+                    #actions.append({'type':NEXT1})
+                #else:
+                    #actions.extend([{'type':MERGE},{'type':REPLACEHEAD},{'type':SWAP}])
+                    #actions.append({'type':NEXT1})
+                    ##if len(currentChild.parents) > 1:
+                    ##actions.append({'type':REATTACH,'parent_to_attach':None}) # this equals delete edge
+                    actions.append({'type':SWAP})
+                    actions.extend([{'type':REATTACH,'parent_to_attach':p} for p in currentGraph.get_possible_parent_constrained(currentIdx,currentChildIdx)])
+
+                    #actions.extend([{'type':NEXT1,'edge_label':y} for y in all_candidate_edge_labels])
+
+                if isinstance(currentIdx,int) and isinstance(currentChildIdx,int):
+                    actions.append({'type':MERGE})
+                actions.extend([{'type':NEXT1},{'type':REPLACEHEAD}])
+                actions.extend({'type':REENTRANCE,'parent_to_add':x} for x in currentGraph.get_possible_reentrance_constrained(currentIdx,currentChildIdx))
+            else:
+                actions.extend([{'type':NEXT1}])
+                #if len(currentChild.parents) > 1:
+                #actions.append({'type':REATTACH,'parent_to_attach':None}) # this equals delete edge
+                actions.extend([{'type':REATTACH,'parent_to_attach':p} for p in currentGraph.get_possible_parent_constrained(currentIdx,currentChildIdx)])
+                #actions.extend({'type':ADDCHILD,'child_type':x} for x in currentGraph.get_possible_children_unconstrained(currentIdx))
+        else:
+            all_candidate_tags = []
+            # MOD
+            if current_tok_lemma in token_to_concept_table:
+                all_candidate_tags.extend(list(token_to_concept_table[current_tok_lemma]))
+                #all_candidate_tags.append(current_tok_lemma.lower())
+            elif isinstance(currentIdx,int) and (current_tok_ne not in ['O','NUMBER'] or currentNode.end - currentNode.start > 1):
+                all_candidate_tags.extend(list(token_to_concept_table[current_tok_ne]))
+                #all_candidate_tags.append(current_tok_lemma.lower())
+                #all_candidate_tags.extend(GraphState.model.tag_codebook['ETag'].labels())
+            elif current_tok_lemma == ABT_TOKEN['lemma']:
+                #all_candidate_tags.extend(tag_codebook['ABTTag'].labels())
+                pass
+                #all_candidate_tags.extend(currentGraph.nodes[currentIdx].tag)
+            else:
+                all_candidate_tags.append(current_tok_lemma.lower())  # for decoding
+
+            if isinstance(currentIdx,int) and 'frmset' in GraphState.sent[currentIdx] \
+               and GraphState.sent[currentIdx]['frmset'] not in all_candidate_tags:
+                all_candidate_tags.append(GraphState.sent[currentIdx]['frmset'])
+
+
+            if not currentNode.children and currentIdx != 0:
+                actions.append({'type':DELETENODE})
+            actions.append({'type':NEXT2})
+            actions.extend({'type':NEXT2,'tag':z} for z in all_candidate_tags)
+
+        if currentIdx != 0:
+            actions.append({'type':DELETENODE})
+            actions.append({'type':NEXT2, 'tag':currentNode.tag})
+
+        return actions
+
 
 
     def get_node_context(self,idx):
